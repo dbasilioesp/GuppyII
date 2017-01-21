@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+
+    <title>Submarine</title>
+
+    <style>
+        body {
+            padding: 0px;
+            margin: 0px;
+            background-color: white;
+            height: 100%;
+        }
+        .game {
+            max-width: 1024px;
+            height: auto;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="game" class="game"></div>
+    <script type="text/javascript" src="js/phaser.js"></script>
+
+    <script type="text/javascript" src="js/states/BootState.js"></script>
+    <script type="text/javascript" src="js/states/LoadingState.js"></script>
+    <script type="text/javascript" src="js/states/SubmarineState.js"></script>
+    <script type="text/javascript" src="js/main.js"></script>
+</body>
+</html>

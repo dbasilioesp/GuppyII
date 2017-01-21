@@ -1,0 +1,75 @@
+{"frames": {
+
+"Sub-01.png":
+{
+	"frame": {"x":0,"y":0,"w":32,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":16},
+	"sourceSize": {"w":32,"h":16},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"Sub-02.png":
+{
+	"frame": {"x":32,"y":0,"w":32,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":16},
+	"sourceSize": {"w":32,"h":16},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"Sub-03.png":
+{
+	"frame": {"x":64,"y":0,"w":32,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":16},
+	"sourceSize": {"w":32,"h":16},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"Sub-04.png":
+{
+	"frame": {"x":96,"y":0,"w":16,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"Sub-05.png":
+{
+	"frame": {"x":112,"y":0,"w":32,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":16},
+	"sourceSize": {"w":32,"h":16},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"Sub-06.png":
+{
+	"frame": {"x":144,"y":0,"w":32,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":16},
+	"sourceSize": {"w":32,"h":16},
+	"pivot": {"x":0.5,"y":0.5}
+},
+"Sub-07.png":
+{
+	"frame": {"x":176,"y":0,"w":32,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":32,"h":16},
+	"sourceSize": {"w":32,"h":16},
+	"pivot": {"x":0.5,"y":0.5}
+}},
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"version": "1.0",
+	"image": "../images/submarino.png",
+	"format": "RGBA8888",
+	"size": {"w":208,"h":16},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:8c5ea131fe1efda345a286e72784ca9b:7844b757fdb7f9881fbbe616ee1ae3da:406e04fca8248a28487e3edce3c2ae0e$"
+}
+}

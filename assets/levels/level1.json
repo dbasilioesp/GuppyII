@@ -1,0 +1,16 @@
+{
+    "assets": {
+        "submarine": {"type": "atlasJSONHash", "source": "assets/images/submarino.png", "texture": "assets/textures/submarino.json"},
+        "satelite": {"type": "atlasJSONHash", "source": "assets/images/satelite.png", "texture": "assets/textures/satelite.json"},
+        "level_tilemap": {"type": "tilemap", "source": "assets/maps/level-a1.json"},
+        "map_tiles": {"type": "image", "source": "assets/images/submarine-tiles.png"},
+        "lightball": {"type": "image", "source": "assets/images/Item__27.png"}
+    },
+    "map": {
+        "key": "level_tilemap",
+        "tilesets": ["map_tiles"]
+    }
+}
+
+    
+    
