@@ -5,10 +5,14 @@
         "mine": {"type": "atlasJSONHash", "source": "assets/images/mine.png", "texture": "assets/textures/mine.json"},
         "boss": {"type": "atlasJSONHash", "source": "assets/images/boss.png", "texture": "assets/textures/boss.json"},
         "boss_explosion": {"type": "atlasJSONHash", "source": "assets/images/boss-explosion.png", "texture": "assets/textures/boss-explosion.json"},
+        "life": {"type": "atlasJSONHash", "source": "assets/images/life.png", "texture": "assets/textures/life.json"},
+
         "explosion": {"type": "atlasJSONHash", "source": "assets/images/explosion.png", "texture": "assets/textures/explosion.json"},
         "level_tilemap": {"type": "tilemap", "source": "assets/maps/level-a1.json"},
         "map_tiles": {"type": "image", "source": "assets/images/submarine-tiles.png"},
-        "lightball": {"type": "image", "source": "assets/images/Item__27.png"}
+        "lightball": {"type": "image", "source": "assets/images/Item__27.png"},
+        "bullet": {"type": "image", "source": "assets/images/bullet.png"},
+        "boss_bullet": {"type": "image", "source": "assets/images/boss-bullet.png"}
     },
     "map": {
         "key": "level_tilemap",

@@ -6804,7 +6804,7 @@
    <tile gid="0"/>
    <tile gid="18"/>
    <tile gid="18"/>
-   <tile gid="0"/>
+   <tile gid="18"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -6874,7 +6874,7 @@
    <tile gid="0"/>
    <tile gid="18"/>
    <tile gid="18"/>
-   <tile gid="0"/>
+   <tile gid="18"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -6943,34 +6943,34 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="18"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
    <tile gid="18"/>
    <tile gid="18"/>
    <tile gid="18"/>
@@ -7015,7 +7015,7 @@
   </data>
  </layer>
  <objectgroup name="player">
-  <object id="4" name="Player" type="player" x="268" y="720" width="20" height="20">
+  <object id="4" name="Player" type="player" x="276" y="720" width="20" height="20">
    <ellipse/>
   </object>
  </objectgroup>
@@ -7046,32 +7046,17 @@
   <object id="13" x="28" y="188" width="16" height="16">
    <ellipse/>
   </object>
-  <object id="17" x="80" y="204" width="16" height="16">
+  <object id="17" x="60" y="472" width="16" height="16">
    <ellipse/>
   </object>
   <object id="18" x="164" y="140" width="16" height="16">
    <ellipse/>
   </object>
-  <object id="19" x="32" y="260" width="16" height="16">
-   <ellipse/>
-  </object>
-  <object id="20" x="72" y="260" width="16" height="16">
-   <ellipse/>
-  </object>
-  <object id="21" x="40" y="312" width="16" height="16">
-   <ellipse/>
-  </object>
-  <object id="22" x="84" y="316" width="16" height="16">
-   <ellipse/>
-  </object>
-  <object id="23" x="88" y="360" width="16" height="16">
-   <ellipse/>
-  </object>
-  <object id="24" x="40" y="364" width="16" height="16">
+  <object id="23" x="52" y="336" width="16" height="16">
    <ellipse/>
   </object>
  </objectgroup>
  <objectgroup name="boss">
-  <object id="25" x="164" y="700" width="56" height="52"/>
+  <object id="25" x="164" y="700" width="24" height="20"/>
  </objectgroup>
 </map>
