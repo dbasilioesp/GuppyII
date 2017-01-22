@@ -20,7 +20,7 @@ GameJam17.SubmarineState.prototype.init = function (level_data) {
     this.scale.pageAlignVertically = true;
 
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
-    this.game.physics.arcade.gravity.y = 500;
+    this.game.physics.arcade.gravity.y = 400;
 
     // create map and set tileset
     this.map = this.game.add.tilemap(level_data.map.key);
@@ -37,22 +37,30 @@ GameJam17.SubmarineState.prototype.create = function (level_data) {
 	var centerX = this.game.world.centerX;
 	var centerY = this.game.world.centerY;
 
-	// Groups
+   	// Mask
 
-	this.satelites = this.game.add.group();
-   	this.satelites.enableBody = true;
+    this.mask = this.game.add.graphics(0, 0);
+    this.mask.beginFill(0xffffff);
+   	this.mask.drawCircle(0, 0, 60);
 
 	// Map
 
     this.layers = {};
     this.map.layers.forEach(function (layer) {
         this.layers[layer.name] = this.map.createLayer(layer.name);
+        this.layers[layer.name].mask = this.mask;
         if (layer.properties.collision) { // collision layer
             this.map.setCollisionByExclusion([-1], true, layer.name);
         }
     }, this);
 
-    this.layers[this.map.layer.name].resizeWorld();
+    // Groups
+
+    this.satelites = this.game.add.group();
+   	this.satelites.enableBody = true;
+
+   	this.mines = this.game.add.group();
+   	this.mines.enableBody = true;
 
     for (object_layer in this.map.objects) {
         if (this.map.objects.hasOwnProperty(object_layer)) {
@@ -61,50 +69,21 @@ GameJam17.SubmarineState.prototype.create = function (level_data) {
     			this.map.objects[object_layer].forEach(this.createSatelites, this);
             }
 
-            
+            if (object_layer === 'player') {
+            	this.createPlayer(this.map.objects[object_layer][0]);
+            }
+
+            if (object_layer === 'minas') {
+    			this.map.objects[object_layer].forEach(this.createMines, this);
+            }
+
+            if (object_layer === 'boss') {
+    			this.createBoss(this.map.objects[object_layer][0]);
+            }
         }
     }
 
-    // Player
-
-    this.player = this.game.add.sprite(140, 140, 'submarine', 'Sub-01.png');
-    this.player.anchor.set(0.5, 0.5);
-    this.player.sonarPower = 0;
-
-    this.game.physics.arcade.enable(this.player);
-    this.player.body.drag.set(100);
-    this.player.body.maxVelocity.set(50);
-
-    this.player.anims = {};
-    this.player.anims.idle = this.player.animations.add('idle', Phaser.Animation.generateFrameNames('Sub-', 1, 2, '.png', 2), 2, true, false);
-    this.player.anims.turn = this.player.animations.add('turn', Phaser.Animation.generateFrameNames('Sub-', 3, 5, '.png', 2), 2, false, false);
-    this.player.animations.play('idle');
-    this.player.facing = 'right';
-
-    this.player.anims.turn.onComplete.add(this.submarineFinishTurn, this);
-
-	// Camera
-
-    this.game.camera.follow(this.player);
-
-   	// Mask
-
-    this.mask = this.game.add.graphics(0, 0);
-    this.mask.beginFill(0xffffff);
-   	this.mask.drawCircle(0, 0, 60);
-   	
-   	this.player.mask = this.mask;
-   	this.player.addChild(this.mask);
-   	this.layers.walls.mask = this.mask;
-   	this.layers.background.mask = this.mask;
-
-   	// Enemy
-
-   	this.enemy = this.game.add.sprite(550, 140, 'submarine', 'Sub-01.png');
-   	this.enemy.anchor.set(0.5, 0.5);
-   	this.enemy.tint = '0xff7711';
-
-   	this.game.physics.arcade.enable(this.enemy);
+    this.layers[this.map.layer.name].resizeWorld();
 
    	this.sonar(120);
 
@@ -123,12 +102,15 @@ GameJam17.SubmarineState.prototype.create = function (level_data) {
 
 GameJam17.SubmarineState.prototype.update = function () {
 
-	this.game.physics.arcade.collide(this.player, this.layers.walls);
-	this.game.physics.arcade.collide(this.enemy, this.layers.walls);
-	this.game.physics.arcade.overlap(this.player, this.satelites, this.catchLightball, null, this);
+	this.map.layers.forEach(function (layer) {
+		if (layer.properties.collision) {
+            this.game.physics.arcade.collide(this.player, this.layers[layer.name]);
+        }
+	}, this);
 
-	// this.player.body.velocity.y = 0;
-	
+	this.game.physics.arcade.overlap(this.player, this.satelites, this.catchLightball, null, this);
+	this.game.physics.arcade.collide(this.player, this.mines, this.playerDie, null, this);
+
 	if (this.cursors.left.isDown || this.wasd.left.isDown) {
         
         this.player.body.acceleration.set(-50, 0);
@@ -148,7 +130,9 @@ GameJam17.SubmarineState.prototype.update = function () {
         }
 
     } else {
+    	
     	this.player.body.acceleration.set(0);
+    	
     }
 
     if (this.cursors.up.isDown || this.wasd.up.isDown) {
@@ -159,7 +143,18 @@ GameJam17.SubmarineState.prototype.update = function () {
     	this.player.body.velocity.y = 0;
     }
 
-    this.enemy.body.velocity.y = -10;
+    if (this.game.input.keyboard.isDown(Phaser.Keyboard.Z)) {
+    	
+    	this.map.layers.forEach(function (layer) {
+    		var layerObject = this.layers[layer.name];
+	        if (layerObject.mask) {
+	        	layerObject.mask = null;
+	        } else {
+	        	layerObject.mask = this.mask;
+	        }
+	    }, this);
+    }
+
 
 };
 
@@ -202,14 +197,131 @@ GameJam17.SubmarineState.prototype.submarineFinishTurn = function () {
 	}
 };
 
+
+GameJam17.SubmarineState.prototype.createPlayer = function (object) {
+	"use strict";
+    var position;
+    
+    position = this.objectPosition(object);
+
+	// Player
+
+    this.player = this.game.add.sprite(position.x, position.y, 'submarine', 'Sub-01.png');
+    this.player.initial_position = position;
+    this.player.anchor.set(0.5, 0.5);
+    this.player.sonarPower = 0;
+    this.player.isDamaged = false;
+
+    this.game.physics.arcade.enable(this.player);
+    this.player.body.drag.set(100);
+    this.player.body.maxVelocity.set(50);
+
+    this.player.anims = {};
+    this.player.anims.idle = this.player.animations.add('idle', Phaser.Animation.generateFrameNames('Sub-', 1, 2, '.png', 2), 2, true, false);
+    this.player.anims.turn = this.player.animations.add('turn', Phaser.Animation.generateFrameNames('Sub-', 3, 5, '.png', 2), 2, false, false);
+    this.player.animations.play('idle');
+    this.player.facing = 'right';
+
+    this.player.anims.turn.onComplete.add(this.submarineFinishTurn, this);
+
+	// Camera
+
+    this.game.camera.follow(this.player);
+
+   	this.player.mask = this.mask;
+   	this.player.addChild(this.mask);
+
+};
+
+GameJam17.SubmarineState.prototype.createBoss = function (object) {
+	"use strict";
+    var position;
+
+    position = this.objectPosition(object);
+
+    this.boss = this.game.add.sprite(position.x, position.y, 'boss');
+    this.boss.scale.set(-1, 1);
+
+    this.boss.animations.add('idle', [2, 1, 2, 1, 0], 1, true, true);
+    this.boss.animations.play('idle');
+};
+
 GameJam17.SubmarineState.prototype.createSatelites = function (object) {
 	"use strict";
-    var object_y, position, satelite;
+    var position, satelite;
+    
+    position = this.objectPosition(object);
+
+   	satelite = this.satelites.create(position.x, position.y, 'satelite');
+   	satelite.body.allowGravity = false;
+   	satelite.mask = this.mask;
+   	satelite.anchor.set(0.5, 0.5);
+
+   	satelite.animations.add('idle', Phaser.Animation.generateFrameNames('coin', 1, 3, '.png', 1), 2, true, false);
+   	satelite.animations.play('idle');
+};
+
+
+GameJam17.SubmarineState.prototype.createMines = function (object) {
+	"use strict";
+    var position, mine;
+    
+    position = this.objectPosition(object);
+
+   	mine = this.mines.create(position.x, position.y, 'mine');
+   	mine.body.allowGravity = false;
+   	mine.body.immovable = true;
+   	mine.mask = this.mask;
+   	mine.anchor.set(0.5, 0.5);
+
+   	mine.animations.add('idle', Phaser.Animation.generateFrameNames('mine-', 1, 2, '.png', 2), 3, true, false);
+   	mine.animations.play('idle');
+};
+
+
+GameJam17.SubmarineState.prototype.objectPosition = function (object) {
+	"use strict";
+    var object_y, position;
     
     // tiled coordinates starts in the bottom left corner
     object_y = (object.gid) ? object.y - (this.map.tileHeight / 2) : object.y + (object.height / 2);
     position = {"x": object.x + (this.map.tileHeight / 2), "y": object_y};
 
-   	satelite = this.satelites.create(position.x, position.y, 'satelite');
-   	satelite.body.allowGravity = false;
+    return position;
+};
+
+
+GameJam17.SubmarineState.prototype.playerDie = function (player, mine) {
+    "use strict";
+
+    var explosion;
+
+    mine.visible = false;
+    explosion = this.game.add.sprite(mine.x, mine.y, 'explosion');
+    explosion.animations.add('kabum', [0, 1], 5).onComplete.add(function(){
+    	var tween = this.game.add.tween(explosion).to({alpha: 0}, 300, Phaser.Linear, true);
+    	tween.onComplete.add(explosion.kill);
+    }, this);
+    explosion.play('kabum');
+    mine.kill();
+
+
+    var angle = this.game.physics.arcade.angleBetween(player, mine);
+    this.player.body.velocity.x += Math.cos(-angle) * 10000;
+    this.player.body.velocity.y += Math.sin(-angle) * 10000;
+    this.player.isDamaged = true;
+   
+    // decrease the number of lives
+    this.number_of_lives -= 1;
+    if (this.player.number_of_lives <= 0) {
+        // if there are no more lives, it's game over
+        
+        
+    } else {
+        // if there are remaining lives, restart the player position
+        //this.player.reset(this.player.initial_position.x, this.player.initial_position.y);
+
+
+
+    }
 };

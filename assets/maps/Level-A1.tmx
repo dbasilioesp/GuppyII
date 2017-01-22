@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="70" height="50" tilewidth="16" tileheight="16" nextobjectid="5">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="70" height="50" tilewidth="16" tileheight="16" nextobjectid="26">
  <tileset firstgid="1" name="terrains" tilewidth="16" tileheight="16" tilecount="36" columns="6">
   <image source="../images/submarine-tiles.png" trans="ff00ff" width="100" height="100"/>
  </tileset>
@@ -3508,6 +3508,9 @@
   </data>
  </layer>
  <layer name="walls" width="70" height="50">
+  <properties>
+   <property name="collision" value="true"/>
+  </properties>
   <data>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -6391,56 +6394,6 @@
    <tile gid="18"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -6456,28 +6409,8 @@
    <tile gid="18"/>
    <tile gid="18"/>
    <tile gid="18"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
    <tile gid="18"/>
    <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -6519,6 +6452,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="18"/>
    <tile gid="18"/>
    <tile gid="18"/>
@@ -6531,9 +6465,78 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="18"/>
    <tile gid="18"/>
    <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -6601,9 +6604,9 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -6671,9 +6674,9 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
-   <tile gid="18"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -7012,7 +7015,7 @@
   </data>
  </layer>
  <objectgroup name="player">
-  <object id="4" name="Player" type="player" x="24" y="52" width="20" height="20">
+  <object id="4" name="Player" type="player" x="268" y="720" width="20" height="20">
    <ellipse/>
   </object>
  </objectgroup>
@@ -7022,5 +7025,53 @@
   </properties>
   <object id="1" gid="3" x="904" y="200" width="16" height="16"/>
   <object id="2" gid="3" x="768" y="192" width="16" height="16"/>
+  <object id="5" gid="3" x="88" y="164" width="16" height="16"/>
+  <object id="6" gid="3" x="60" y="168" width="16" height="16"/>
+  <object id="7" gid="3" x="32" y="164" width="16" height="16"/>
+  <object id="8" gid="3" x="12" y="168" width="16" height="16"/>
+  <object id="9" x="220" y="332" width="20" height="16">
+   <ellipse/>
+  </object>
+  <object id="10" x="592" y="308" width="12" height="16">
+   <ellipse/>
+  </object>
+  <object id="11" x="1012" y="204" width="24" height="28">
+   <ellipse/>
+  </object>
+  <object id="12" x="1036" y="716" width="24" height="20">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup name="minas">
+  <object id="13" x="28" y="188" width="16" height="16">
+   <ellipse/>
+  </object>
+  <object id="17" x="80" y="204" width="16" height="16">
+   <ellipse/>
+  </object>
+  <object id="18" x="164" y="140" width="16" height="16">
+   <ellipse/>
+  </object>
+  <object id="19" x="32" y="260" width="16" height="16">
+   <ellipse/>
+  </object>
+  <object id="20" x="72" y="260" width="16" height="16">
+   <ellipse/>
+  </object>
+  <object id="21" x="40" y="312" width="16" height="16">
+   <ellipse/>
+  </object>
+  <object id="22" x="84" y="316" width="16" height="16">
+   <ellipse/>
+  </object>
+  <object id="23" x="88" y="360" width="16" height="16">
+   <ellipse/>
+  </object>
+  <object id="24" x="40" y="364" width="16" height="16">
+   <ellipse/>
+  </object>
+ </objectgroup>
+ <objectgroup name="boss">
+  <object id="25" x="164" y="700" width="56" height="52"/>
  </objectgroup>
 </map>

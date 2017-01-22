@@ -2,6 +2,10 @@
     "assets": {
         "submarine": {"type": "atlasJSONHash", "source": "assets/images/submarino.png", "texture": "assets/textures/submarino.json"},
         "satelite": {"type": "atlasJSONHash", "source": "assets/images/satelite.png", "texture": "assets/textures/satelite.json"},
+        "mine": {"type": "atlasJSONHash", "source": "assets/images/mine.png", "texture": "assets/textures/mine.json"},
+        "boss": {"type": "atlasJSONHash", "source": "assets/images/boss.png", "texture": "assets/textures/boss.json"},
+        "boss_explosion": {"type": "atlasJSONHash", "source": "assets/images/boss-explosion.png", "texture": "assets/textures/boss-explosion.json"},
+        "explosion": {"type": "atlasJSONHash", "source": "assets/images/explosion.png", "texture": "assets/textures/explosion.json"},
         "level_tilemap": {"type": "tilemap", "source": "assets/maps/level-a1.json"},
         "map_tiles": {"type": "image", "source": "assets/images/submarine-tiles.png"},
         "lightball": {"type": "image", "source": "assets/images/Item__27.png"}
