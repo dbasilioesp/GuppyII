@@ -3,7 +3,8 @@ window.onload = function() {
 	game.state.add("BootState", new GameJam17.BootState());
 	game.state.add("LoadingState", new GameJam17.LoadingState());
 	game.state.add("SubmarineState", new GameJam17.SubmarineState());
+	game.state.add("TitleState", new GameJam17.TitleState());
 	
-	game.state.start("BootState", true, false, "assets/levels/level1.json", "SubmarineState");
+	game.state.start("BootState", true, false, "assets/levels/title.json", "TitleState");
 }
 

@@ -96,6 +96,16 @@ GameJam17.SubmarineState.prototype.create = function (level_data) {
 
 	this.sonar(120);
 
+	this.ambientMusic = this.game.add.audio('ambient_music', 1, true);
+	this.bossMusic = this.game.add.audio('boss_music', 1, true);
+	this.sonarMusic = this.game.add.audio('sonar_music', 0.7, true);
+
+	this.ambientMusic.play();
+	this.sonarMusic.play();
+
+	this.explosionSound = this.game.add.audio('explosion_sound', 0.7);
+	this.coinSound = this.game.add.audio('coin_sound', 0.7);
+
 	// Cursors
 
 	this.cursors = this.game.input.keyboard.createCursorKeys();
@@ -118,7 +128,7 @@ GameJam17.SubmarineState.prototype.update = function () {
 		}
 	}, this);
 
-	this.game.physics.arcade.overlap(this.player, this.satelites, this.catchLightball, null, this);
+	this.game.physics.arcade.overlap(this.player, this.satelites, this.catchSatelite, null, this);
 	this.game.physics.arcade.collide(this.player, this.mines, this.playerDie, null, this);
 	this.game.physics.arcade.collide(this.player, this.bossBullets, this.playerDie, null, this);
 	this.game.physics.arcade.overlap(this.boss, this.playerBullets, this.bossDie, null, this);
@@ -191,16 +201,16 @@ GameJam17.SubmarineState.prototype.update = function () {
 		}, this);
 	}
 
-
 };
 
-GameJam17.SubmarineState.prototype.catchLightball = function (player, lightball) {
+GameJam17.SubmarineState.prototype.catchSatelite = function (player, lightball) {
 
 	lightball.kill();
 	this.sonar(20);
+	this.coinSound.play();
 
 	var flash = this.game.add.graphics(this.player.x, this.player.y);
-	flash.beginFill(0xFFEB3B);
+	flash.beginFill(0xFFFFFF);
 	flash.drawCircle(0, 0, 500);
 	flash.mask = this.mask;
 	
@@ -356,6 +366,8 @@ GameJam17.SubmarineState.prototype.createMines = function (object) {
 
 	mine.animations.add('idle', Phaser.Animation.generateFrameNames('mine-', 1, 2, '.png', 2), 3, true, false);
 	mine.animations.play('idle');
+
+	this.game.add.tween(mine).to({x: mine.x - 20}, 1000, Phaser.Linear, true, null, -1, true);
 };
 
 
@@ -374,33 +386,29 @@ GameJam17.SubmarineState.prototype.objectPosition = function (object) {
 GameJam17.SubmarineState.prototype.playerDie = function (player, crashed) {
 	"use strict";
 
-	var explosion, texture;
+	var explosion;
 
-	if (crashed.key === 'boss_bullet') {
-		texture = 'boss_explosion';
-	} else {
-		texture = 'explosion';
-	}
-	
 	crashed.visible = false;
-	explosion = this.game.add.sprite(crashed.x, crashed.y, texture);
-	explosion.animations.add('kabum', [0, 1], 5).onComplete.add(function(){
-		var tween = this.game.add.tween(explosion).to({alpha: 0}, 300, Phaser.Linear, true);
-		tween.onComplete.add(explosion.kill);
-	}, this);
-	explosion.play('kabum');
+	this.createExplosion(crashed.x, crashed.y, crashed.key);
 
 	this.player.angle = this.game.physics.arcade.angleBetween(crashed, this.player);
 	this.player.body.acceleration.set(0);
 	this.game.physics.arcade.velocityFromAngle(this.player.angle, 100, this.player.body.velocity);
 
 	crashed.kill();
+
+	if(crashed.key === 'boss_bullet') {
+		this.ambientMusic.stop();
+		this.bossMusic.play();
+	}
    
 	// decrease the number of lives
 	this.player.lives -= 1;
 
-	if (this.player.lives === 3)
+	if (this.player.lives === 3) {
 		this.life.frame = 1;
+	}
+
 	if (this.player.lives === 2)
 		this.life.frame = 2;
 	if (this.player.lives === 1)
@@ -417,7 +425,7 @@ GameJam17.SubmarineState.prototype.bossDie = function (boss, bullet) {
 	"use strict";
 
 	bullet.visible = false;	
-	this.createExplosion(bullet.x, bullet.y);
+	this.createExplosion(bullet.x, bullet.y, bullet.key);
 	bullet.kill();
  
 	this.boss.lives -= 1;
@@ -429,22 +437,29 @@ GameJam17.SubmarineState.prototype.bossDie = function (boss, bullet) {
 GameJam17.SubmarineState.prototype.bulletCollide = function (bullet, layer) {
 
 	bullet.visible = false;
-	this.createExplosion(bullet.x, bullet.y);
+	this.createExplosion(bullet.x, bullet.y, bullet.key);
 	bullet.kill();
 
 };
 
-GameJam17.SubmarineState.prototype.createExplosion = function (x, y) {
+GameJam17.SubmarineState.prototype.createExplosion = function (x, y, key) {
 
-	var explosion;
+	var explosion, texture;
 
-	explosion = this.game.add.sprite(x, y, 'explosion');
+	if (key === 'boss_bullet') {
+		texture = 'boss_explosion';
+	} else {
+		texture = 'explosion';
+	}
+
+	explosion = this.game.add.sprite(x, y, texture);
 	explosion.anchor.set(0.5, 0.5);
 	explosion.animations.add('kabum', [0, 1], 5).onComplete.add(function(){
 		var tween = this.game.add.tween(explosion).to({alpha: 0}, 300, Phaser.Linear, true);
 		tween.onComplete.add(explosion.kill);
 	}, this);
 	explosion.play('kabum');
+	this.explosionSound.play();
 
 };
 

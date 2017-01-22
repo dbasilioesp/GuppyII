@@ -7015,7 +7015,7 @@
   </data>
  </layer>
  <objectgroup name="player">
-  <object id="4" name="Player" type="player" x="276" y="720" width="20" height="20">
+  <object id="4" name="Player" type="player" x="76" y="208" width="20" height="20">
    <ellipse/>
   </object>
  </objectgroup>

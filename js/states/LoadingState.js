@@ -35,6 +35,9 @@ GameJam17.LoadingState.prototype.preload = function () {
             case "atlasJSONHash":
                 this.load.atlasJSONHash(asset_key, asset.source, asset.texture);
                 break;
+            case "audio":
+                this.load.audio(asset_key, asset.source);
+                break;
             }
 
         }

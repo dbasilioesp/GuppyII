@@ -44,8 +44,8 @@
                  "type":"player",
                  "visible":true,
                  "width":20,
-                 "x":276,
-                 "y":720
+                 "x":76,
+                 "y":208
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -256,7 +256,7 @@
         }, 
         {
          "draworder":"topdown",
-         "height":50,
+         "height":0,
          "name":"boss",
          "objects":[
                 {
@@ -273,7 +273,7 @@
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
-         "width":70,
+         "width":0,
          "x":0,
          "y":0
         }],
