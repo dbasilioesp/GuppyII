@@ -96,7 +96,7 @@ GameJam17.SubmarineState.prototype.create = function (level_data) {
 
 	this.sonar(120);
 
-	this.ambientMusic = this.game.add.audio('ambient_music', 1, true);
+	this.ambientMusic = this.game.add.audio('banks_music', 1, true);
 	this.bossMusic = this.game.add.audio('boss_music', 1, true);
 	this.sonarMusic = this.game.add.audio('sonar_music', 0.7, true);
 
