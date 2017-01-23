@@ -1,0 +1,5 @@
+{
+    "assets": {
+        "background": {"type": "image", "source": "assets/images/win.png"}
+    }
+}

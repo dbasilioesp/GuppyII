@@ -132,6 +132,7 @@ GameJam17.SubmarineState.prototype.update = function () {
 	this.game.physics.arcade.collide(this.player, this.mines, this.playerDie, null, this);
 	this.game.physics.arcade.collide(this.player, this.bossBullets, this.playerDie, null, this);
 	this.game.physics.arcade.overlap(this.boss, this.playerBullets, this.bossDie, null, this);
+	this.game.physics.arcade.overlap(this.playerBullets, this.mines, this.mineCollide, null, this);
 
 	if (this.cursors.left.isDown || this.wasd.left.isDown) {
 		
@@ -265,7 +266,7 @@ GameJam17.SubmarineState.prototype.createPlayer = function (object) {
 
 	this.player.anims = {};
 	this.player.anims.idle = this.player.animations.add('idle', Phaser.Animation.generateFrameNames('Sub-', 1, 2, '.png', 2), 2, true, false);
-	this.player.anims.turn = this.player.animations.add('turn', Phaser.Animation.generateFrameNames('Sub-', 3, 5, '.png', 2), 2, false, false);
+	this.player.anims.turn = this.player.animations.add('turn', Phaser.Animation.generateFrameNames('Sub-', 3, 5, '.png', 2), 4, false, false);
 	this.player.animations.play('idle');
 	this.player.facing = 'right';
 
@@ -319,7 +320,7 @@ GameJam17.SubmarineState.prototype.bossSpawn = function (object) {
 	distance = this.game.physics.arcade.distanceBetween(this.player, this.boss);
 
 	if (distance <= 150) {
-		bullet = this.bossBullets.create(this.boss.x + 10, this.boss.y + (this.boss.height / 2) - 4, 'boss_bullet');
+		bullet = this.bossBullets.create(this.boss.x + 10, this.boss.y - 4, 'boss_bullet');
 		bullet.body.allowGravity = false;
 		bullet.anchor.set(0.5, 0.5);
 		bullet.checkWorldBounds = true;
@@ -397,7 +398,7 @@ GameJam17.SubmarineState.prototype.playerDie = function (player, crashed) {
 
 	crashed.kill();
 
-	if(crashed.key === 'boss_bullet') {
+	if(crashed.key === 'boss_bullet' && !this.bossMusic.isPlaying) {
 		this.ambientMusic.stop();
 		this.bossMusic.play();
 	}
@@ -429,6 +430,12 @@ GameJam17.SubmarineState.prototype.bossDie = function (boss, bullet) {
 	bullet.kill();
  
 	this.boss.lives -= 1;
+	
+	if(!this.bossMusic.isPlaying) {
+		this.ambientMusic.stop();
+		this.bossMusic.play();
+	}
+
 	if (this.boss.lives <= 0) {
 		this.game_win();
 	}
@@ -439,6 +446,16 @@ GameJam17.SubmarineState.prototype.bulletCollide = function (bullet, layer) {
 	bullet.visible = false;
 	this.createExplosion(bullet.x, bullet.y, bullet.key);
 	bullet.kill();
+
+};
+
+GameJam17.SubmarineState.prototype.mineCollide = function (bullet, mine) {
+
+	bullet.visible = false;
+	mine.visible = false;
+	this.createExplosion(mine.x, mine.y, mine.key);
+	bullet.kill();
+	mine.kill();
 
 };
 
@@ -465,10 +482,12 @@ GameJam17.SubmarineState.prototype.createExplosion = function (x, y, key) {
 
 GameJam17.SubmarineState.prototype.game_over = function () {
 	"use strict";
+	this.bossMusic.stop();
+	this.ambientMusic.stop();
 	this.game.state.start("BootState", true, false, "assets/levels/level1.json", "SubmarineState");
 };
 
 GameJam17.SubmarineState.prototype.game_win = function () {
 	"use strict";
-	this.game.state.start("BootState", true, false, "assets/levels/level2.json", "SubmarineState");
+	this.game.state.start("BootState", true, false, "assets/levels/win.json", "WinState");
 };

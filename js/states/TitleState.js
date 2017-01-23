@@ -22,16 +22,21 @@ GameJam17.TitleState.prototype.create = function () {
 
 	this.game.add.sprite(0, 0, 'background');
 
-	this.game.add.button(this.game.world.width - 220, this.game.world.height - 120, 'start_button', this.startGame, this);
-	this.game.add.button(this.game.world.width - 220, this.game.world.height - 80, 'credits_button', this.credits, this);
+	this.game.add.button(this.game.world.width - 220, this.game.world.height - 130, 'start_button', this.startGame, this);
+	this.game.add.button(this.game.world.width - 220, this.game.world.height - 85, 'credits_button', this.credits, this);
+
+	this.ambientMusic = this.game.add.audio('ambient_music', 1, true);
+	this.ambientMusic.play();
 
 };
 
 
 GameJam17.TitleState.prototype.startGame = function () {
+	this.ambientMusic.stop();
 	this.game.state.start("BootState", true, false, "assets/levels/level1.json", "SubmarineState");
 };
 
 GameJam17.TitleState.prototype.credits = function () {
+	this.ambientMusic.stop();
 	this.game.state.start("BootState", true, false, "assets/levels/credits.json", "CreditsState");
 };
