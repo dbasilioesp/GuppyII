@@ -14,6 +14,8 @@ GameJam17.TitleState.prototype.init = function (level_data) {
 	this.game.stage.backgroundColor = 0x000000;
 
 	this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+	this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+	
 	this.scale.pageAlignHorizontally = true;
 	this.scale.pageAlignVertically = true;
 };
@@ -33,7 +35,9 @@ GameJam17.TitleState.prototype.create = function () {
 
 GameJam17.TitleState.prototype.startGame = function () {
 	this.ambientMusic.stop();
-	this.game.state.start("BootState", true, true, "assets/levels/level1.json", "SubmarineState");
+	this.ambientMusic.destroy(true);
+	this.game.cache.removeSound('aitua_music');
+	this.game.state.start("BootState", true, false, "assets/levels/level1.json", "SubmarineState", {show_loading: true});
 };
 
 GameJam17.TitleState.prototype.credits = function () {

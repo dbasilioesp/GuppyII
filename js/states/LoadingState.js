@@ -50,5 +50,43 @@ GameJam17.LoadingState.prototype.preload = function () {
 
 GameJam17.LoadingState.prototype.create = function () {
     "use strict";
+
+    this.timer = null;
+    this.loadingText = this.game.add.text(32, 32, 'Loading...', { fill: '#ffffff' });
+
+    if (this.extra_parameters && this.extra_parameters.show_loading) {
+        
+        this.game.load.onLoadComplete.add(this.loadComplete, this);
+        this.game.load.start();
+
+    } else {
+        this.startState();
+    }
+
+};
+
+
+GameJam17.LoadingState.prototype.loadComplete = function() {
+
+    this.timer = this.time.create();
+    this.timer.add(Phaser.Timer.SECOND * 3, this.fadeScreenToStart, this);
+    this.timer.start();
+
+};
+
+GameJam17.LoadingState.prototype.fadeScreenToStart = function() {
+
+    this.game.add.tween(this.loadingText)
+        .to({alpha: 0}, 500, Phaser.Linear, true)
+        .onComplete.add(function(){
+            this.startState();
+        }, this);
+
+};
+
+
+GameJam17.LoadingState.prototype.startState = function () {
+
     this.game.state.start(this.next_state, true, false, this.level_data, this.extra_parameters);
+
 };

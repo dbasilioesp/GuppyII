@@ -15,10 +15,6 @@ GameJam17.SubmarineState.prototype.init = function (level_data) {
 
 	this.game.stage.backgroundColor = 0x000000;
 
-	this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-	this.scale.pageAlignHorizontally = true;
-	this.scale.pageAlignVertically = true;
-
 	this.game.physics.startSystem(Phaser.Physics.ARCADE);
 	this.game.physics.arcade.gravity.y = 400;
 
@@ -116,6 +112,16 @@ GameJam17.SubmarineState.prototype.create = function (level_data) {
 		left: this.game.input.keyboard.addKey(Phaser.Keyboard.A),
 		right: this.game.input.keyboard.addKey(Phaser.Keyboard.D)
 	};
+
+	this.preloadFade = this.game.add.graphics(0, 0);
+	this.preloadFade.beginFill(0x000000);
+	this.preloadFade.drawRect(0, 0, this.game.width, this.game.height);
+
+	this.game.add.tween(this.preloadFade)
+		.to({alpha: 0}, 1500, Phaser.Linear, true)
+		.onComplete.add(function(){
+			this.preloadFade.destroy();
+		}, this);
 
 };
 
