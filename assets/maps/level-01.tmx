@@ -115,7 +115,7 @@
 </data>
  </layer>
  <objectgroup name="player">
-  <object id="1" x="71.333" y="37.333" width="25.3333" height="26.6667">
+  <object id="1" x="328" y="660" width="25.3333" height="26.6667">
    <ellipse/>
   </object>
  </objectgroup>
