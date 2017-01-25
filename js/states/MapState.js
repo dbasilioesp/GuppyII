@@ -33,7 +33,7 @@ GameJam17.MapState.prototype.create = function (level_data) {
 	
 	this.levels = [];
 	this.timer = this.time.create();
-	this.timer.add(Phaser.Timer.SECOND * 2, this.startState, this);
+	this.timer.add(Phaser.Timer.SECOND * 1, this.startState, this);
 
 	this.points = [
 		{x: 100, y: 450},
@@ -73,7 +73,7 @@ GameJam17.MapState.prototype.create = function (level_data) {
 			this.timer.start();
 		}, this);
 
-	this.fadeIn();
+	this.fadeOut();
 };
 
 GameJam17.MapState.prototype.startState = function () {
@@ -88,7 +88,7 @@ GameJam17.MapState.prototype.startState = function () {
 		actualLevel: this.nextLevel
 	};
 
-	this.fadeOut(500, function(){
+	this.fadeIn(300, function(){
 		this.game.state.start('BootState', true, false, levelConfig, "SubmarineState", extraParameters);
 	}, this);
 };

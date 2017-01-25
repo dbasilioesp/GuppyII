@@ -18,11 +18,11 @@ GameJam17.CreditsState.prototype.create = function () {
 	this.game.add.sprite(0, 0, 'background');
 	this.game.add.button(this.game.world.width - 80, this.game.world.height - 70, 'sair_button', this.titleState, this);	
 
-	this.fadeIn();
+	this.fadeOut();
 };
 
 GameJam17.CreditsState.prototype.titleState = function () {
-	this.fadeOut(500, function(){
+	this.fadeIn(300, function(){
 		this.game.state.start("BootState", true, false, "assets/levels/title.json", "TitleState");
 	}, this);
 };

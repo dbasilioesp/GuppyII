@@ -116,9 +116,7 @@ GameJam17.SubmarineState.prototype.create = function (level_data) {
 		right: this.game.input.keyboard.addKey(Phaser.Keyboard.D)
 	};
 
-	this.fadeIn(3000, function(){
-		console.log('submarine faded');
-	}, this);
+	this.fadeOut(1500);
 };
 
 GameJam17.SubmarineState.prototype.update = function () {
@@ -499,11 +497,11 @@ GameJam17.SubmarineState.prototype.game_win = function () {
 	this.sonarMusic.stop();
 
 	if (this.extra_parameters.isLastLevel) {
-		this.fadeOut(3000, function(){
+		this.fadeIn(3000, function(){
 			this.game.state.start("BootState", true, false, "assets/levels/win.json", "WinState");
 		}, this);
 	} else {
-		this.fadeOut(1500, function(){
+		this.fadeIn(1500, function(){
 			this.game.state.start("BootState", true, false, "assets/levels/map.json", "MapState", {previousLevel: this.actualLevel, nextLevel: this.actualLevel + 1});
 		}, this);
 	}

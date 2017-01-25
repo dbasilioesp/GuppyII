@@ -8,15 +8,16 @@ GameJam17.GameState = function () {
 GameJam17.GameState.prototype = Object.create(Phaser.State.prototype);
 GameJam17.GameState.prototype.constructor = GameJam17.GameState;
 
-GameJam17.GameState.prototype.fadeIn = function (duration, functionCall, context, delay) {
+GameJam17.GameState.prototype.fadeOut = function (duration, functionCall, context, delay) {
 
 	context = context || this;
-	duration = duration || 500;
+	duration = duration || 300;
 	delay = delay || 0;
 
 	this.preloadFade = this.game.add.graphics(0, 0);
 	this.preloadFade.beginFill(0x000000);
 	this.preloadFade.drawRect(0, 0, this.game.width, this.game.height);
+	this.preloadFade.fixedToCamera = true;
 
 	this.game.add.tween(this.preloadFade)
 		.to({alpha: 0}, duration, Phaser.Linear, true, delay)
@@ -31,16 +32,17 @@ GameJam17.GameState.prototype.fadeIn = function (duration, functionCall, context
 
 };
 
-GameJam17.GameState.prototype.fadeOut = function (duration, functionCall, context, delay) {
+GameJam17.GameState.prototype.fadeIn = function (duration, functionCall, context, delay) {
 
 	context = context || this;
-	duration = duration || 500;
+	duration = duration || 300;
 	delay = delay || 0;
 
 	this.preloadFade = this.game.add.graphics(0, 0);
 	this.preloadFade.beginFill(0x000000);
 	this.preloadFade.drawRect(0, 0, this.game.width, this.game.height);
 	this.preloadFade.alpha = 0;
+	this.preloadFade.fixedToCamera = true;
 
 	this.game.add.tween(this.preloadFade)
 		.to({alpha: 1}, duration, Phaser.Linear, true, delay)

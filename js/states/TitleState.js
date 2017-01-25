@@ -30,11 +30,11 @@ GameJam17.TitleState.prototype.create = function () {
 	this.game.add.button(this.game.world.width - 220, this.game.world.height - 130, 'start_button', this.mapState, this);
 	this.game.add.button(this.game.world.width - 220, this.game.world.height - 85, 'credits_button', this.creditsState, this);
 
-	this.fadeIn();
+	this.fadeOut();
 };
 
 GameJam17.TitleState.prototype.mapState = function () {
-	this.fadeOut(500, function(){
+	this.fadeIn(300, function(){
 		this.ambientMusic.stop();
 		this.ambientMusic.destroy(true);
 		this.game.cache.removeSound('aitua_music');
@@ -43,7 +43,7 @@ GameJam17.TitleState.prototype.mapState = function () {
 };
 
 GameJam17.TitleState.prototype.creditsState = function () {
-	this.fadeOut(500, function(){
+	this.fadeIn(300, function(){
 		this.game.state.start("BootState", true, false, "assets/levels/credits.json", "CreditsState");
 	}, this);
 };

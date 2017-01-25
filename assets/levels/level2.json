@@ -8,7 +8,7 @@
         "life": {"type": "atlasJSONHash", "source": "assets/images/life.png", "texture": "assets/textures/life.json"},
         "explosion": {"type": "atlasJSONHash", "source": "assets/images/explosion.png", "texture": "assets/textures/explosion.json"},
         
-        "level_tilemap": {"type": "tilemap", "source": "assets/maps/level B1.json"},
+        "level_tilemap": {"type": "tilemap", "source": "assets/maps/level-02.json"},
         "map_tiles": {"type": "image", "source": "assets/images/submarine-tiles.png"},
         "map_tiles_criaturas": {"type": "image", "source": "assets/images/criaturas.png"},
         "map_tiles_algas": {"type": "image", "source": "assets/images/algas.png"},

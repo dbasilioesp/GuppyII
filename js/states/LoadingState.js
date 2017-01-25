@@ -13,11 +13,21 @@ GameJam17.LoadingState.prototype.init = function (level_data, next_state, extra_
     this.level_data = level_data;
     this.next_state = next_state;
     this.extra_parameters = extra_parameters;
+    this.showLoading = this.extra_parameters ? this.extra_parameters.showLoading : null;
 
     this.game.stage.backgroundColor = 0x000000;
 };
 
 GameJam17.LoadingState.prototype.preload = function () {
+
+    if (!this.showLoading) {
+        this.loading();
+    }
+
+};
+
+
+GameJam17.LoadingState.prototype.loading = function () {
     "use strict";
     var assets, asset_loader, asset_key, asset;
     assets = this.level_data.assets;
@@ -50,17 +60,21 @@ GameJam17.LoadingState.prototype.preload = function () {
     }
 };
 
+
 GameJam17.LoadingState.prototype.create = function () {
     "use strict";
 
     this.timer = null;
     this.loadingText = this.game.add.text(32, 32, 'Loading...', { fill: '#ffffff' });
 
-    if (this.extra_parameters && this.extra_parameters.showLoading) {
+    if (this.showLoading) {
         this.game.load.onLoadComplete.add(this.loadComplete, this);
-        this.game.load.start();
 
-        this.fadeIn();
+        this.fadeOut(300, function(){
+            this.loading();
+            this.game.load.start();
+        }, this);
+
     } else {
         this.loadingText.visible = false;
         this.startState();
@@ -71,11 +85,9 @@ GameJam17.LoadingState.prototype.create = function () {
 
 GameJam17.LoadingState.prototype.loadComplete = function() {
 
-    this.fadeOut(1500, function(){
+    this.fadeIn(1500, function(){
         this.startState();
     }, this, 1500);
-    
-    // this.timer.add(Phaser.Timer.SECOND * 3, this.startState, this);
     
 };
 
