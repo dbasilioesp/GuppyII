@@ -2,10 +2,10 @@ var GameJam17 = GameJam17 || {};
 
 GameJam17.CreditsState = function () {
 	"use strict";
-	Phaser.State.call(this);
+	GameJam17.GameState.call(this);
 };
 
-GameJam17.CreditsState.prototype = Object.create(Phaser.State.prototype);
+GameJam17.CreditsState.prototype = Object.create(GameJam17.GameState.prototype);
 GameJam17.CreditsState.prototype.constructor = GameJam17.CreditsState;
 
 GameJam17.CreditsState.prototype.init = function (level_data) {
@@ -15,12 +15,14 @@ GameJam17.CreditsState.prototype.init = function (level_data) {
 };
 
 GameJam17.CreditsState.prototype.create = function () {
-
 	this.game.add.sprite(0, 0, 'background');
-	this.game.add.button(this.game.world.width - 80, this.game.world.height - 70, 'sair_button', this.titleScreen, this);	
+	this.game.add.button(this.game.world.width - 80, this.game.world.height - 70, 'sair_button', this.titleState, this);	
+
+	this.fadeIn();
 };
 
-
-GameJam17.CreditsState.prototype.titleScreen = function () {
-	this.game.state.start("BootState", true, false, "assets/levels/title.json", "TitleState");
+GameJam17.CreditsState.prototype.titleState = function () {
+	this.fadeOut(500, function(){
+		this.game.state.start("BootState", true, false, "assets/levels/title.json", "TitleState");
+	}, this);
 };

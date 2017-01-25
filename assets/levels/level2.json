@@ -13,7 +13,6 @@
         "map_tiles_criaturas": {"type": "image", "source": "assets/images/criaturas.png"},
         "map_tiles_algas": {"type": "image", "source": "assets/images/algas.png"},
 
-        "lightball": {"type": "image", "source": "assets/images/Item__27.png"},
         "bullet": {"type": "image", "source": "assets/images/bullet.png"},
         "boss_bullet": {"type": "image", "source": "assets/images/boss-bullet.png"},
 

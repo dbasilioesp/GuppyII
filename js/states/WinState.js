@@ -2,10 +2,10 @@ var GameJam17 = GameJam17 || {};
 
 GameJam17.WinState = function () {
 	"use strict";
-	Phaser.State.call(this);
+	GameJam17.GameState.call(this);
 };
 
-GameJam17.WinState.prototype = Object.create(Phaser.State.prototype);
+GameJam17.WinState.prototype = Object.create(GameJam17.GameState.prototype);
 GameJam17.WinState.prototype.constructor = GameJam17.WinState;
 
 GameJam17.WinState.prototype.init = function (level_data) {
@@ -21,5 +21,6 @@ GameJam17.WinState.prototype.init = function (level_data) {
 GameJam17.WinState.prototype.create = function () {
 
 	this.game.add.sprite(0, 0, 'background');
-
+	this.fadeIn();
+	
 };

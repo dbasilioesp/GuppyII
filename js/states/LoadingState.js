@@ -2,10 +2,10 @@ var GameJam17 = GameJam17 || {};
 
 GameJam17.LoadingState = function () {
     "use strict";
-    Phaser.State.call(this);
+    GameJam17.GameState.call(this);
 };
 
-GameJam17.LoadingState.prototype = Object.create(Phaser.State.prototype);
+GameJam17.LoadingState.prototype = Object.create(GameJam17.GameState.prototype);
 GameJam17.LoadingState.prototype.constructor = GameJam17.LoadingState;
 
 GameJam17.LoadingState.prototype.init = function (level_data, next_state, extra_parameters) {
@@ -13,6 +13,8 @@ GameJam17.LoadingState.prototype.init = function (level_data, next_state, extra_
     this.level_data = level_data;
     this.next_state = next_state;
     this.extra_parameters = extra_parameters;
+
+    this.game.stage.backgroundColor = 0x000000;
 };
 
 GameJam17.LoadingState.prototype.preload = function () {
@@ -54,12 +56,13 @@ GameJam17.LoadingState.prototype.create = function () {
     this.timer = null;
     this.loadingText = this.game.add.text(32, 32, 'Loading...', { fill: '#ffffff' });
 
-    if (this.extra_parameters && this.extra_parameters.show_loading) {
-        
+    if (this.extra_parameters && this.extra_parameters.showLoading) {
         this.game.load.onLoadComplete.add(this.loadComplete, this);
         this.game.load.start();
 
+        this.fadeIn();
     } else {
+        this.loadingText.visible = false;
         this.startState();
     }
 
@@ -68,25 +71,17 @@ GameJam17.LoadingState.prototype.create = function () {
 
 GameJam17.LoadingState.prototype.loadComplete = function() {
 
-    this.timer = this.time.create();
-    this.timer.add(Phaser.Timer.SECOND * 3, this.fadeScreenToStart, this);
-    this.timer.start();
-
-};
-
-GameJam17.LoadingState.prototype.fadeScreenToStart = function() {
-
-    this.game.add.tween(this.loadingText)
-        .to({alpha: 0}, 500, Phaser.Linear, true)
-        .onComplete.add(function(){
-            this.startState();
-        }, this);
-
+    this.fadeOut(1500, function(){
+        this.startState();
+    }, this, 1500);
+    
+    // this.timer.add(Phaser.Timer.SECOND * 3, this.startState, this);
+    
 };
 
 
 GameJam17.LoadingState.prototype.startState = function () {
-
+    
     this.game.state.start(this.next_state, true, false, this.level_data, this.extra_parameters);
 
 };

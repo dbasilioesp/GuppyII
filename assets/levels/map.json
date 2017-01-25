@@ -1,0 +1,5 @@
+{
+    "assets": {
+        "submarine": {"type": "atlasJSONHash", "source": "assets/images/submarino.png", "texture": "assets/textures/submarino.json"}   
+    }
+}

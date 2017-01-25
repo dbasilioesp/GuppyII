@@ -2,10 +2,10 @@ var GameJam17 = GameJam17 || {};
 
 GameJam17.TitleState = function () {
 	"use strict";
-	Phaser.State.call(this);
+	GameJam17.GameState.call(this);
 };
 
-GameJam17.TitleState.prototype = Object.create(Phaser.State.prototype);
+GameJam17.TitleState.prototype = Object.create(GameJam17.GameState.prototype);
 GameJam17.TitleState.prototype.constructor = GameJam17.TitleState;
 
 GameJam17.TitleState.prototype.init = function (level_data) {
@@ -27,19 +27,23 @@ GameJam17.TitleState.prototype.create = function () {
 	this.ambientMusic = this.game.add.audio('aitua_music', 1, true);
 	this.ambientMusic.play();
 
-	this.game.add.button(this.game.world.width - 220, this.game.world.height - 130, 'start_button', this.startGame, this);
-	this.game.add.button(this.game.world.width - 220, this.game.world.height - 85, 'credits_button', this.credits, this);
+	this.game.add.button(this.game.world.width - 220, this.game.world.height - 130, 'start_button', this.mapState, this);
+	this.game.add.button(this.game.world.width - 220, this.game.world.height - 85, 'credits_button', this.creditsState, this);
 
+	this.fadeIn();
 };
 
-
-GameJam17.TitleState.prototype.startGame = function () {
-	this.ambientMusic.stop();
-	this.ambientMusic.destroy(true);
-	this.game.cache.removeSound('aitua_music');
-	this.game.state.start("BootState", true, false, "assets/levels/level1.json", "SubmarineState", {show_loading: true});
+GameJam17.TitleState.prototype.mapState = function () {
+	this.fadeOut(500, function(){
+		this.ambientMusic.stop();
+		this.ambientMusic.destroy(true);
+		this.game.cache.removeSound('aitua_music');
+		this.game.state.start("BootState", true, false, "assets/levels/map.json", "MapState", {nextLevel: 1});
+	}, this);
 };
 
-GameJam17.TitleState.prototype.credits = function () {
-	this.game.state.start("BootState", true, false, "assets/levels/credits.json", "CreditsState");
+GameJam17.TitleState.prototype.creditsState = function () {
+	this.fadeOut(500, function(){
+		this.game.state.start("BootState", true, false, "assets/levels/credits.json", "CreditsState");
+	}, this);
 };

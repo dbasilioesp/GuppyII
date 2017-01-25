@@ -2,16 +2,19 @@ var GameJam17 = GameJam17 || {};
 
 GameJam17.SubmarineState = function () {
 	"use strict";
-	Phaser.State.call(this);
+	GameJam17.GameState.call(this);
 };
 
-GameJam17.SubmarineState.prototype = Object.create(Phaser.State.prototype);
+GameJam17.SubmarineState.prototype = Object.create(GameJam17.GameState.prototype);
 GameJam17.SubmarineState.prototype.constructor = GameJam17.SubmarineState;
 
-GameJam17.SubmarineState.prototype.init = function (level_data) {
+GameJam17.SubmarineState.prototype.init = function (level_data, extra_parameters) {
 	"use strict";
 	var tileset_index;
 	this.level_data = level_data;
+	this.extra_parameters = extra_parameters;
+
+	this.actualLevel = this.extra_parameters.actualLevel;
 
 	this.game.stage.backgroundColor = 0x000000;
 
@@ -113,16 +116,9 @@ GameJam17.SubmarineState.prototype.create = function (level_data) {
 		right: this.game.input.keyboard.addKey(Phaser.Keyboard.D)
 	};
 
-	this.preloadFade = this.game.add.graphics(0, 0);
-	this.preloadFade.beginFill(0x000000);
-	this.preloadFade.drawRect(0, 0, this.game.width, this.game.height);
-
-	this.game.add.tween(this.preloadFade)
-		.to({alpha: 0}, 1500, Phaser.Linear, true)
-		.onComplete.add(function(){
-			this.preloadFade.destroy();
-		}, this);
-
+	this.fadeIn(3000, function(){
+		console.log('submarine faded');
+	}, this);
 };
 
 GameJam17.SubmarineState.prototype.update = function () {
@@ -187,9 +183,11 @@ GameJam17.SubmarineState.prototype.update = function () {
 		bullet.mask = this.mask;
 
 		if (this.player.facing === 'right') {
-			bullet.body.velocity.x = 50;	
+			bullet.body.velocity.x = 50;
+			bullet.body.acceleration.x = 30;
 		} else if(this.player.facing === 'left') {
 			bullet.body.velocity.x = -50;
+			bullet.body.acceleration.x = -30;
 			bullet.scale.set(-1, 1);
 		}
 		
@@ -495,5 +493,19 @@ GameJam17.SubmarineState.prototype.game_over = function () {
 
 GameJam17.SubmarineState.prototype.game_win = function () {
 	"use strict";
-	this.game.state.start("BootState", true, false, "assets/levels/win.json", "WinState");
+	
+	this.ambientMusic.stop();
+	this.bossMusic.stop();
+	this.sonarMusic.stop();
+
+	if (this.extra_parameters.isLastLevel) {
+		this.fadeOut(3000, function(){
+			this.game.state.start("BootState", true, false, "assets/levels/win.json", "WinState");
+		}, this);
+	} else {
+		this.fadeOut(1500, function(){
+			this.game.state.start("BootState", true, false, "assets/levels/map.json", "MapState", {previousLevel: this.actualLevel, nextLevel: this.actualLevel + 1});
+		}, this);
+	}
+
 };
