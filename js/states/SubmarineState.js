@@ -65,6 +65,9 @@ GameJam17.SubmarineState.prototype.create = function (level_data) {
 	this.bossBullets = this.game.add.group();
 	this.bossBullets.enableBody = true;
 
+	this.mapLives = this.game.add.group();
+	this.mapLives.enableBody = true;
+
 	for (object_layer in this.map.objects) {
 		if (this.map.objects.hasOwnProperty(object_layer)) {
 			// create layer objects
@@ -83,15 +86,24 @@ GameJam17.SubmarineState.prototype.create = function (level_data) {
 			if (object_layer === 'boss') {
 				this.createBoss(this.map.objects[object_layer][0]);
 			}
+
+			if (object_layer === 'lives') {
+				this.map.objects[object_layer].forEach(this.createLive, this);
+			}
 		}
 	}
 
 	this.layers[this.map.layer.name].resizeWorld();
 
-	this.life = this.game.add.sprite(15, 15, 'life');
-	this.life.fixedToCamera = true;
+	this.player.lives = this.game.add.group();
 
-	this.setSonar(120);
+	for (var i = 0, live; i < 5; i++) {
+		live = this.player.lives.create(15 + (i * 24), 15, 'live_mini');
+		live.fixedToCamera = true;
+	}
+	
+	this.setSonar(500);
+	this.setSonar(540);
 
 	this.ambientMusic = this.game.add.audio('banks_music', 1, true);
 	this.bossMusic = this.game.add.audio('boss_music', 1, true);
@@ -129,6 +141,7 @@ GameJam17.SubmarineState.prototype.update = function () {
 	this.game.physics.arcade.overlap(this.player, this.satelites, this.catchSatelite, null, this);
 	this.game.physics.arcade.collide(this.player, this.mines, this.playerDie, null, this);
 	this.game.physics.arcade.collide(this.player, this.bossBullets, this.playerDie, null, this);
+	this.game.physics.arcade.overlap(this.player, this.mapLives, this.catchLife, null, this);
 	this.game.physics.arcade.overlap(this.boss, this.playerBullets, this.bossDie, null, this);
 	this.game.physics.arcade.overlap(this.playerBullets, this.mines, this.mineCollide, null, this);
 	this.game.physics.arcade.overlap(this.playerBullets, this.bossBullets, this.bulletsCollide, null, this);
@@ -158,7 +171,7 @@ GameJam17.SubmarineState.prototype.update = function () {
 	}
 
 	if (this.cursors.up.isDown || this.wasd.up.isDown) {
-		this.player.body.acceleration.y = -(this.game.physics.arcade.gravity.y + 40);
+		this.player.body.acceleration.y = -(this.game.physics.arcade.gravity.y + 60);
 	} else if (this.cursors.down.isDown || this.wasd.down.isDown) {
 		this.player.body.velocity.y = 40;
 	} else {
@@ -205,11 +218,34 @@ GameJam17.SubmarineState.prototype.update = function () {
 
 };
 
-GameJam17.SubmarineState.prototype.catchSatelite = function (player, lightball) {
+GameJam17.SubmarineState.prototype.catchLife = function(player, live) {
+
+	var flash, flashTween, total, newLive;
+
+	live.kill();
+	total = this.player.lives.total;
+	newLive = this.player.lives.create(15 + (total * 24), 15, 'live_mini');
+	newLive.fixedToCamera = true;
+	this.coinSound.play();
+
+	flash = this.game.add.graphics(this.player.x, this.player.y);
+	flash.beginFill(0x00B0FF);
+	flash.drawCircle(0, 0, 500);
+	flash.mask = this.mask;
+	
+	flashTween = this.game.add.tween(flash).to({alpha: 0}, 500, Phaser.Linear, true);
+	flashTween.onComplete.add(function(){
+		flashTween.stop();
+		flash.kill();
+	});
+
+};
+
+GameJam17.SubmarineState.prototype.catchSatelite = function (player, satelite) {
 
 	var flash, flashTween;
 
-	lightball.kill();
+	satelite.kill();
 	this.setSonar(this.player.sonarPower + 20);
 	this.coinSound.play();
 
@@ -393,6 +429,22 @@ GameJam17.SubmarineState.prototype.createMines = function (object) {
 };
 
 
+GameJam17.SubmarineState.prototype.createLive = function (object) {
+	"use strict";
+	var position, live;
+	
+	position = this.objectPosition(object);
+
+	live = this.mapLives.create(position.x, position.y, 'live_mini');
+	live.body.allowGravity = false;
+	live.body.immovable = true;
+	live.mask = this.mask;
+	live.anchor.set(0.5, 0.5);
+
+	this.game.add.tween(live).to({angle: 360}, 5000, Phaser.Linear, true, null, -1);
+};
+
+
 GameJam17.SubmarineState.prototype.objectPosition = function (object) {
 	"use strict";
 	var object_y, position;
@@ -436,21 +488,10 @@ GameJam17.SubmarineState.prototype.playerDie = function (player, crashed) {
 		this.ambientMusic.stop();
 		this.bossMusic.play();
 	}
-   
-	// decrease the number of lives
-	this.player.lives -= 1;
 
-	if (this.player.lives === 3) {
-		this.life.frame = 1;
-	}
-
-	if (this.player.lives === 2)
-		this.life.frame = 2;
-	if (this.player.lives === 1)
-		this.life.frame = 3;
-
-	if (this.player.lives <= 0) {
-		// if there are no more lives, it's game over
+	this.player.lives.remove(this.player.lives.getTop());
+	
+	if (this.player.lives.total <= 0) {
 		this.game_over();
 	}
 };
