@@ -13,11 +13,9 @@ GameJam17.SubmarineState.prototype.init = function (level_data, extra_parameters
 	var tileset_index;
 	this.level_data = level_data;
 	this.extra_parameters = extra_parameters;
-
 	this.actualLevel = this.extra_parameters.actualLevel;
 
 	this.game.stage.backgroundColor = 0x000000;
-
 	this.game.physics.startSystem(Phaser.Physics.ARCADE);
 	this.game.physics.arcade.gravity.y = 400;
 
@@ -40,8 +38,8 @@ GameJam17.SubmarineState.prototype.create = function (level_data) {
 
 	this.mask = this.game.add.graphics(0, 0);
 	this.mask.beginFill(0xffffff);
-	this.mask.drawCircle(0, 0, 60);
-
+	this.mask = this.mask.drawCircle(0, 0, 60);
+	
 	// Map
 
 	this.layers = {};
@@ -133,6 +131,7 @@ GameJam17.SubmarineState.prototype.update = function () {
 	this.game.physics.arcade.collide(this.player, this.bossBullets, this.playerDie, null, this);
 	this.game.physics.arcade.overlap(this.boss, this.playerBullets, this.bossDie, null, this);
 	this.game.physics.arcade.overlap(this.playerBullets, this.mines, this.mineCollide, null, this);
+	this.game.physics.arcade.overlap(this.playerBullets, this.bossBullets, this.bulletsCollide, null, this);
 
 	if (this.cursors.left.isDown || this.wasd.left.isDown) {
 		
@@ -181,11 +180,11 @@ GameJam17.SubmarineState.prototype.update = function () {
 		bullet.mask = this.mask;
 
 		if (this.player.facing === 'right') {
-			bullet.body.velocity.x = 50;
-			bullet.body.acceleration.x = 30;
+			bullet.body.velocity.x = 20;
+			bullet.body.acceleration.x = 80;
 		} else if(this.player.facing === 'left') {
-			bullet.body.velocity.x = -50;
-			bullet.body.acceleration.x = -30;
+			bullet.body.velocity.x = -20;
+			bullet.body.acceleration.x = -80;
 			bullet.scale.set(-1, 1);
 		}
 		
@@ -224,15 +223,15 @@ GameJam17.SubmarineState.prototype.catchSatelite = function (player, lightball) 
 		flashTween.stop();
 		flash.kill();
 	});
-
 };
 
 
 GameJam17.SubmarineState.prototype.setSonar = function(power) {
 	power  = power >= 80 ? power : 80;
 	this.player.sonarPower = power;
+	
 	this.player.sonarTween = this.game.add.tween(this.mask)
-		.to({width: this.player.sonarPower, height: this.player.sonarPower}, 
+		.to({width: this.player.sonarPower, height: this.player.sonarPower},
 			1000, Phaser.Easing.Linear.None, true, -1, -1, true);
 };
 
@@ -294,6 +293,8 @@ GameJam17.SubmarineState.prototype.createBoss = function (object) {
 	this.boss = this.game.add.sprite(position.x, position.y, 'boss');
 	this.boss.scale.set(-1, 1);
 	this.boss.lives = 10;
+	this.boss.injured = false;
+	this.boss.rage = 2;
 	this.boss.anchor.set(0.5, 0.5);
 
 	this.game.physics.arcade.enable(this.boss);
@@ -323,21 +324,37 @@ GameJam17.SubmarineState.prototype.bossSpawn = function (object) {
 
 	distance = this.game.physics.arcade.distanceBetween(this.player, this.boss);
 
-	if (distance <= 150) {
-		bullet = this.bossBullets.create(this.boss.x + 10, this.boss.y - 4, 'boss_bullet');
-		bullet.body.allowGravity = false;
-		bullet.anchor.set(0.5, 0.5);
-		bullet.checkWorldBounds = true;
-		bullet.outOfBoundsKill = true;
-		bullet.body.allowRotation = true;
-		bullet.mask = this.mask;
-
+	if (this.boss.injured) {
+		bullet = this.createBossBullet(this.boss.x + 10, this.boss.y - 4);
 		bullet.angle = this.game.physics.arcade.angleBetween(bullet, this.player) * 100;
-		this.game.physics.arcade.velocityFromAngle(bullet.angle, 10, bullet.body.velocity);
+		this.game.physics.arcade.velocityFromAngle(bullet.angle, 80, bullet.body.velocity);
+
+		if (this.boss.rage >= 2) {
+			this.boss.rage = 0;
+
+			for (var i = 0; i < 5; i++) {
+				bullet = this.createBossBullet(this.boss.x + 10, (this.boss.y - (this.boss.height / 2)) + (i * 15 + 5));
+				bullet.body.velocity.x = 80;
+			}
+		}
 	}
 	
 
 	this.bossScheduleSpawn();
+};
+
+
+GameJam17.SubmarineState.prototype.createBossBullet = function (x, y) {
+
+	bullet = this.bossBullets.create(x, y, 'boss_bullet');
+	bullet.body.allowGravity = false;
+	bullet.anchor.set(0.5, 0.5);
+	bullet.checkWorldBounds = true;
+	bullet.outOfBoundsKill = true;
+	bullet.body.allowRotation = true;
+	bullet.mask = this.mask;
+
+	return bullet;
 };
 
 
@@ -447,6 +464,8 @@ GameJam17.SubmarineState.prototype.bossDie = function (boss, bullet) {
 	bullet.kill();
  
 	this.boss.lives -= 1;
+	this.boss.injured = true;
+	this.boss.rage += 1;
 	
 	if(!this.bossMusic.isPlaying) {
 		this.ambientMusic.stop();
@@ -476,6 +495,19 @@ GameJam17.SubmarineState.prototype.mineCollide = function (bullet, mine) {
 
 };
 
+
+GameJam17.SubmarineState.prototype.bulletsCollide = function (playerBullet, bossBullet) {
+	playerBullet.visible = false;
+	bossBullet.visible = false;
+
+	this.createExplosion(playerBullet.x, playerBullet.y, playerBullet.key);
+	this.createExplosion(bossBullet.x, bossBullet.y, bossBullet.key);
+
+	playerBullet.kill();
+	bossBullet.kill();
+};
+
+
 GameJam17.SubmarineState.prototype.createExplosion = function (x, y, key) {
 
 	var explosion, texture;
@@ -501,7 +533,7 @@ GameJam17.SubmarineState.prototype.game_over = function () {
 	"use strict";
 	this.bossMusic.stop();
 	this.ambientMusic.stop();
-	this.game.state.start("BootState", true, false, "assets/levels/level1.json", "SubmarineState");
+	this.game.state.start("BootState", true, false, "assets/levels/level1.json", "SubmarineState", {actualLevel: this.actualLevel});
 };
 
 GameJam17.SubmarineState.prototype.game_win = function () {

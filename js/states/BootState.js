@@ -13,6 +13,11 @@ GameJam17.BootState.prototype.init = function (level_file, next_state, extra_par
     this.level_file = level_file;
     this.next_state = next_state;
     this.extra_parameters = extra_parameters;
+
+    this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
+    this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
+    this.scale.pageAlignHorizontally = true;
+    this.scale.pageAlignVertically = true;
 };
 
 GameJam17.BootState.prototype.preload = function () {

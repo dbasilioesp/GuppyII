@@ -12,12 +12,6 @@ GameJam17.TitleState.prototype.init = function (level_data) {
 	"use strict";
 	this.level_data = level_data;
 	this.game.stage.backgroundColor = 0x000000;
-
-	this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-	this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
-	
-	this.scale.pageAlignHorizontally = true;
-	this.scale.pageAlignVertically = true;
 };
 
 GameJam17.TitleState.prototype.create = function () {
