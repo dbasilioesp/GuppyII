@@ -87,6 +87,10 @@ GameJam17.SubmarineState.prototype.create = function (level_data) {
 				this.createBoss(this.map.objects[object_layer][0]);
 			}
 
+			if (object_layer === 'final') {
+				this.createFinal(this.map.objects[object_layer][0]);
+			}
+
 			if (object_layer === 'lives') {
 				this.map.objects[object_layer].forEach(this.createLive, this);
 			}
@@ -142,6 +146,7 @@ GameJam17.SubmarineState.prototype.update = function () {
 	this.game.physics.arcade.collide(this.player, this.mines, this.playerDie, null, this);
 	this.game.physics.arcade.collide(this.player, this.bossBullets, this.playerDie, null, this);
 	this.game.physics.arcade.overlap(this.player, this.mapLives, this.catchLife, null, this);
+	this.game.physics.arcade.overlap(this.player, this.finalPoint, this.game_win, null, this);
 	this.game.physics.arcade.overlap(this.boss, this.playerBullets, this.bossDie, null, this);
 	this.game.physics.arcade.overlap(this.playerBullets, this.mines, this.mineCollide, null, this);
 	this.game.physics.arcade.overlap(this.playerBullets, this.bossBullets, this.bulletsCollide, null, this);
@@ -265,9 +270,11 @@ GameJam17.SubmarineState.prototype.catchSatelite = function (player, satelite) {
 GameJam17.SubmarineState.prototype.setSonar = function(power) {
 	power  = power >= 80 ? power : 80;
 	this.player.sonarPower = power;
+	this.mask.width = power;
+	this.mask.height = power;
 	
 	this.player.sonarTween = this.game.add.tween(this.mask)
-		.to({width: this.player.sonarPower, height: this.player.sonarPower},
+		.to({width: this.player.sonarPower + 40, height: this.player.sonarPower + 40},
 			1000, Phaser.Easing.Linear.None, true, -1, -1, true);
 };
 
@@ -377,6 +384,21 @@ GameJam17.SubmarineState.prototype.bossSpawn = function (object) {
 	
 
 	this.bossScheduleSpawn();
+};
+
+
+GameJam17.SubmarineState.prototype.createFinal = function (object) {
+	"use strict";
+	var position;
+
+	position = {x: object.x + 16, y: object.y - 32};
+
+	this.finalPoint = this.game.add.sprite(position.x, position.y, 'final_point');
+	this.finalPoint.anchor.set(0.5, 0.5);
+
+	this.game.physics.arcade.enable(this.finalPoint);
+	this.finalPoint.body.allowGravity = false;
+	this.finalPoint.body.immovable = false;
 };
 
 
