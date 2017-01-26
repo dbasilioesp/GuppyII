@@ -39,7 +39,9 @@ GameJam17.SubmarineState.prototype.create = function (level_data) {
 	this.mask = this.game.add.graphics(0, 0);
 	this.mask.beginFill(0xffffff);
 	this.mask = this.mask.drawCircle(0, 0, 60);
-	
+	this.mask.width = 800;
+	this.mask.height = 800;
+
 	// Map
 
 	this.layers = {};
@@ -106,9 +108,6 @@ GameJam17.SubmarineState.prototype.create = function (level_data) {
 		live.fixedToCamera = true;
 	}
 	
-	this.setSonar(500);
-	this.setSonar(540);
-
 	this.ambientMusic = this.game.add.audio('banks_music', 1, true);
 	this.bossMusic = this.game.add.audio('boss_music', 1, true);
 	this.sonarMusic = this.game.add.audio('sonar_music', 0.7, true);
@@ -130,7 +129,15 @@ GameJam17.SubmarineState.prototype.create = function (level_data) {
 		right: this.game.input.keyboard.addKey(Phaser.Keyboard.D)
 	};
 
-	this.fadeOut(1500);
+	this.fadeOut(1500, function(){
+
+		this.game.add.tween(this.mask)
+			.to({width: 120, height: 120}, 1500, Phaser.Linar, true)
+			.onComplete.add(function(){
+				this.setSonar(120);
+			}, this);
+
+	}, this);
 };
 
 GameJam17.SubmarineState.prototype.update = function () {
@@ -399,6 +406,7 @@ GameJam17.SubmarineState.prototype.createFinal = function (object) {
 	this.game.physics.arcade.enable(this.finalPoint);
 	this.finalPoint.body.allowGravity = false;
 	this.finalPoint.body.immovable = false;
+	this.finalPoint.mask = this.mask;
 };
 
 

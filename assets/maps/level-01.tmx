@@ -1,7 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="50" tilewidth="16" tileheight="16" nextobjectid="40">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="50" tilewidth="16" tileheight="16" nextobjectid="58">
  <tileset firstgid="1" name="submarine-tiles" tilewidth="16" tileheight="16" tilecount="36" columns="6">
   <image source="../images/submarine-tiles.png" trans="ff00ff" width="100" height="100"/>
+ </tileset>
+ <tileset firstgid="37" name="images" tilewidth="32" tileheight="64" tilecount="3" columns="0">
+  <tile id="2">
+   <image width="16" height="16" source="../images/reactor-mini.png"/>
+  </tile>
+  <tile id="3">
+   <image width="32" height="32" source="../images/reactor.png"/>
+  </tile>
+  <tile id="11">
+   <image width="32" height="64" source="../images/final_point.png"/>
+  </tile>
  </tileset>
  <layer name="agua" width="60" height="50">
   <data encoding="csv">
@@ -100,7 +111,7 @@
 18,18,5,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,17,18,18,11,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,16,10,0,0,0,0,0,0,0,0,0,0,0,0,17,18,18,
 18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,34,35,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,11,0,0,0,0,0,0,0,0,0,0,0,0,17,18,18,
 18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,18,22,23,18,18,18,18,18,18,18,18,11,0,0,0,0,0,0,0,0,0,0,0,0,17,18,18,
-18,18,6,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,4,0,0,0,0,0,0,0,0,0,0,0,0,17,18,18,
+18,18,5,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,4,0,0,0,0,0,0,0,0,0,0,0,0,17,18,18,
 18,18,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,17,18,18,
 18,18,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,17,18,18,
 18,18,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,17,18,18,
@@ -115,7 +126,7 @@
 </data>
  </layer>
  <objectgroup name="player">
-  <object id="1" x="328" y="660" width="25.3333" height="26.6667">
+  <object id="1" x="276" y="672" width="25.3333" height="26.6667">
    <ellipse/>
   </object>
  </objectgroup>
@@ -123,28 +134,16 @@
   <object id="2" x="77.3333" y="157.333" width="22.6667" height="25.3333">
    <ellipse/>
   </object>
-  <object id="3" x="72.6667" y="331.333" width="22.6667" height="25.3333">
+  <object id="3" x="76" y="332" width="22.6667" height="25.3333">
    <ellipse/>
   </object>
   <object id="5" x="144.667" y="522" width="22.6667" height="25.3333">
    <ellipse/>
   </object>
-  <object id="6" x="328.667" y="62" width="22.6667" height="25.3333">
-   <ellipse/>
-  </object>
   <object id="7" x="500.667" y="86" width="22.6667" height="25.3333">
    <ellipse/>
   </object>
-  <object id="8" x="711.333" y="88.6667" width="22.6667" height="25.3333">
-   <ellipse/>
-  </object>
   <object id="9" x="867.333" y="178" width="22.6667" height="25.3333">
-   <ellipse/>
-  </object>
-  <object id="10" x="406" y="454" width="22.6667" height="25.3333">
-   <ellipse/>
-  </object>
-  <object id="11" x="684.667" y="314" width="22.6667" height="25.3333">
    <ellipse/>
   </object>
   <object id="12" x="470" y="307.333" width="22.6667" height="25.3333">
@@ -153,19 +152,10 @@
   <object id="13" x="678" y="512.667" width="22.6667" height="25.3333">
    <ellipse/>
   </object>
-  <object id="34" x="75.3333" y="480.667" width="25.3333" height="26.6667">
-   <ellipse/>
-  </object>
   <object id="35" x="265.333" y="354.667" width="25.3333" height="26.6667">
    <ellipse/>
   </object>
   <object id="36" x="273.333" y="246.667" width="25.3333" height="26.6667">
-   <ellipse/>
-  </object>
-  <object id="37" x="673.333" y="242.667" width="25.3333" height="26.6667">
-   <ellipse/>
-  </object>
-  <object id="38" x="463.333" y="242.667" width="25.3333" height="26.6667">
    <ellipse/>
   </object>
   <object id="39" x="793.333" y="634.667" width="25.3333" height="26.6667">
@@ -191,7 +181,12 @@
   <object id="32" x="529" y="635" width="38" height="38"/>
   <object id="33" x="345" y="705" width="38" height="38"/>
  </objectgroup>
- <objectgroup name="boss">
-  <object id="24" x="102.667" y="673.333" width="28" height="28"/>
+ <objectgroup name="lives">
+  <object id="44" gid="39" x="284" y="84" width="16" height="16"/>
+  <object id="51" gid="39" x="824" y="728" width="16" height="16"/>
+  <object id="52" gid="39" x="680" y="404" width="16" height="16"/>
+ </objectgroup>
+ <objectgroup name="final">
+  <object id="57" gid="48" x="136" y="720" width="32" height="64"/>
  </objectgroup>
 </map>
