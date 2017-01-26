@@ -93,7 +93,7 @@ GameJam17.SubmarineState.prototype.create = function (level_data) {
 	this.life = this.game.add.sprite(15, 15, 'life');
 	this.life.fixedToCamera = true;
 
-	this.sonar(120);
+	this.setSonar(120);
 
 	this.ambientMusic = this.game.add.audio('banks_music', 1, true);
 	this.bossMusic = this.game.add.audio('boss_music', 1, true);
@@ -208,30 +208,32 @@ GameJam17.SubmarineState.prototype.update = function () {
 
 GameJam17.SubmarineState.prototype.catchSatelite = function (player, lightball) {
 
+	var flash, flashTween;
+
 	lightball.kill();
-	this.sonar(20);
+	this.setSonar(this.player.sonarPower + 20);
 	this.coinSound.play();
 
-	var flash = this.game.add.graphics(this.player.x, this.player.y);
+	flash = this.game.add.graphics(this.player.x, this.player.y);
 	flash.beginFill(0xFFFFFF);
 	flash.drawCircle(0, 0, 500);
 	flash.mask = this.mask;
 	
-	var tween = this.game.add.tween(flash).to({alpha: 0}, 500, Phaser.Linear, true);
-
-	tween.onComplete.add(function(){
-		tween.stop();
+	flashTween = this.game.add.tween(flash).to({alpha: 0}, 500, Phaser.Linear, true);
+	flashTween.onComplete.add(function(){
+		flashTween.stop();
 		flash.kill();
 	});
 
 };
 
 
-GameJam17.SubmarineState.prototype.sonar = function(increase) {
-	this.player.sonarPower += increase;
-
-	this.player.sonarTween = this.game.add.tween(this.mask).to({width: this.player.sonarPower, height: this.player.sonarPower}, 1000, Phaser.Easing.Linear.None, true, -1, -1, true);
-
+GameJam17.SubmarineState.prototype.setSonar = function(power) {
+	power  = power >= 80 ? power : 80;
+	this.player.sonarPower = power;
+	this.player.sonarTween = this.game.add.tween(this.mask)
+		.to({width: this.player.sonarPower, height: this.player.sonarPower}, 
+			1000, Phaser.Easing.Linear.None, true, -1, -1, true);
 };
 
 GameJam17.SubmarineState.prototype.submarineFinishTurn = function () {
@@ -389,7 +391,7 @@ GameJam17.SubmarineState.prototype.objectPosition = function (object) {
 GameJam17.SubmarineState.prototype.playerDie = function (player, crashed) {
 	"use strict";
 
-	var explosion;
+	var explosion, flash, flashTween;
 
 	crashed.visible = false;
 	this.createExplosion(crashed.x, crashed.y, crashed.key);
@@ -399,6 +401,19 @@ GameJam17.SubmarineState.prototype.playerDie = function (player, crashed) {
 	this.game.physics.arcade.velocityFromAngle(this.player.angle, 100, this.player.body.velocity);
 
 	crashed.kill();
+
+	this.setSonar(this.player.sonarPower - 40);
+
+	flash = this.game.add.graphics(this.player.x, this.player.y);
+	flash.beginFill(0xFF4444);
+	flash.drawCircle(0, 0, 500);
+	flash.mask = this.mask;
+	
+	flashTween = this.game.add.tween(flash).to({alpha: 0}, 500, Phaser.Linear, true);
+	flashTween.onComplete.add(function(){
+		flashTween.stop();
+		flash.kill();
+	});
 
 	if(crashed.key === 'boss_bullet' && !this.bossMusic.isPlaying) {
 		this.ambientMusic.stop();
