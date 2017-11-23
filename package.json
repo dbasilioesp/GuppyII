@@ -1,0 +1,36 @@
+{
+  "name": "phaser-game",
+  "version": "1.0.0",
+  "license": "MIT",
+  "scripts": {
+    "start": "webpack-dev-server",
+    "build": "webpack",
+    "lint": "tslint src/**/*.ts",
+    "test": "echo 'noop'",
+    "prepublish": "npm run lint && npm run build && npm run test",
+    "prepush": "npm run prepublish",
+    "precommit": "npm run lint"
+  },
+  "devDependencies": {
+    "@types/node": "8.0.47",
+    "@types/webfontloader": "1.6.29",
+    "clean-webpack-plugin": "0.1.17",
+    "copy-webpack-plugin": "4.2.0",
+    "expose-loader": "0.7.3",
+    "file-loader": "1.1.5",
+    "html-webpack-plugin": "2.30.1",
+    "npm-check": "5.4.5",
+    "phaser-ce": "2.9.1",
+    "pngjs-image": "0.11.7",
+    "ts-loader": "3.0.5",
+    "tslint": "5.8.0",
+    "tslint-loader": "3.5.3",
+    "typescript": "2.5.3",
+    "uglifyjs-webpack-plugin": "1.0.1",
+    "webfontloader": "1.6.28",
+    "webpack": "3.8.1",
+    "webpack-dev-server": "2.9.3",
+    "xml2js": "0.4.19"
+  },
+  "dependencies": {}
+}
