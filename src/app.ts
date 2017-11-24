@@ -2,21 +2,21 @@ import 'p2'
 import 'pixi'
 import 'phaser'
 
-import Title from './states/title'
+import BootState from './states/boot.state'
+import TitleState from './states/title.state'
 
 class App extends Phaser.Game {
 
   constructor(config: Phaser.IGameConfig) {
     super(config)
-
-    this.state.add('title', Title)
-
-    this.state.start('title')
+    this.state.add('boot', BootState)
+    this.state.add('title', TitleState)
+    this.state.start('boot')
   }
 
 }
 
-function startApp(): void {
+function startApp (): void {
 
   let gameWidth: number = 800;
   let gameHeight: number = 600;
