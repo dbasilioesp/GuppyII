@@ -7,7 +7,6 @@
     "build": "webpack",
     "lint": "tslint src/**/*.ts",
     "test": "echo 'noop'",
-    "prepublish": "npm run lint && npm run build && npm run test",
     "prepush": "npm run prepublish",
     "precommit": "npm run lint"
   },
@@ -17,7 +16,7 @@
     "clean-webpack-plugin": "0.1.17",
     "copy-webpack-plugin": "4.2.0",
     "expose-loader": "0.7.3",
-    "file-loader": "1.1.5",
+    "file-loader": "^1.1.5",
     "html-webpack-plugin": "2.30.1",
     "npm-check": "5.4.5",
     "phaser-ce": "2.9.1",
