@@ -4,6 +4,7 @@ import 'phaser'
 
 import BootState from './states/boot.state'
 import TitleState from './states/title.state'
+import MapState from './states/map.state'
 
 class App extends Phaser.Game {
 
@@ -11,6 +12,7 @@ class App extends Phaser.Game {
     super(config)
     this.state.add('boot', BootState)
     this.state.add('title', TitleState)
+    this.state.add('map', MapState)
     this.state.start('boot')
   }
 
