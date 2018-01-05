@@ -11,7 +11,10 @@ class BootState extends Phaser.State {
   }
 
   public create (): void {
-    this.game.state.start("title", true, false);
+    const nextState = 'map'
+    const levelFile = 'map.json'
+    const params = { nextLevel: 1 }
+    this.game.state.start("loadfile", true, false, nextState, levelFile, params);
   }
 
 }

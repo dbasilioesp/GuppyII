@@ -1,0 +1,16 @@
+{
+  "assets": {
+    "background": {
+      "type": "image",
+      "source": "assets/images/capa.png"
+    },
+    "start_button": {
+      "type": "image",
+      "source": "assets/images/start_games.png"
+    },
+    "credits_button": {
+      "type": "image",
+      "source": "assets/images/credits.png"
+    }
+  }
+}

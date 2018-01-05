@@ -1,24 +1,7 @@
 import 'phaser'
 
-let imgBackground = require('assets/images/capa.png')
-let imgStartButton = require('assets/images/start_games.png')
-let imgCreditsButton = require('assets/images/credits.png')
-
 
 class TitleState extends Phaser.State {
-
-  public init (): void {
-    this.scale.scaleMode = Phaser.ScaleManager.SHOW_ALL;
-    this.game.scale.fullScreenScaleMode = Phaser.ScaleManager.EXACT_FIT;
-    this.scale.pageAlignHorizontally = true;
-    this.scale.pageAlignVertically = true;
-  }
-
-  public preload (): void {
-    this.load.image('background', imgBackground)
-    this.load.image('start_button', imgStartButton)
-    this.load.image('credits_button', imgCreditsButton)
-  }
 
   public create (): void {
     const gameWidth = this.game.world.width

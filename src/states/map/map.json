@@ -1,0 +1,6 @@
+{
+    "assets": {
+        "submarine": {"type": "atlasJSONHash", "source": "assets/images/submarino.png", "texture": "assets/textures/submarino.json"},
+        "background": {"type": "image", "source": "assets/images/underwater_temple_by_unidcolor-d3cm0fr.jpg"}
+    }
+}

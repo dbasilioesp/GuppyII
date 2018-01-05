@@ -2,6 +2,7 @@ var webpack = require('webpack');
 var path = require('path');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
 var CleanWebpackPlugin = require('clean-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   entry: path.join(__dirname, 'src/app.ts'),
@@ -25,7 +26,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       title: 'Phaser Game!',
       template: path.join(__dirname, 'templates/index.ejs')
-    })
+    }),
+    new CopyWebpackPlugin([
+      { from: 'assets', to: 'assets' },
+      { from: 'src/states/**/*.json', to: 'levels/', flatten: true }
+    ])
   ],
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
@@ -41,6 +46,7 @@ module.exports = {
   module: {
     rules: [
       { test: /assets(\/|\\)/, loader: 'file-loader?name=assets/[hash].[ext]' },
+      { test: /src\/states\/\.json$/, loader: 'file-loader?name=levels/[name].[ext]' },
       { test: /pixi\.js$/, loader: 'expose-loader?PIXI' },
       { test: /phaser-split\.js$/, loader: 'expose-loader?Phaser' },
       { test: /p2\.js$/, loader: 'expose-loader?p2' },

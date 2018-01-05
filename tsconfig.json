@@ -6,7 +6,7 @@
     "sourceMap": true,
     "removeComments": false,
     "noImplicitAny": false,
-    "pretty": true
+    "pretty": true,
   },
   "files": [
     "./node_modules/phaser-ce/typescript/box2d.d.ts",
@@ -16,6 +16,7 @@
   ],
   "include": [
     "./src/**/*.ts",
-    "./node_modules/@types/**/*.ts"
+    "./node_modules/@types/**/*.ts",
+    "./node_modules/phaser-ce/"
   ]
 }
