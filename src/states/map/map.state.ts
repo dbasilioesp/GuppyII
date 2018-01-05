@@ -3,7 +3,6 @@ import 'phaser-ce'
 class MapState extends Phaser.State {
 
   private levelData
-  private nextState
   private params
   private player
   private nextLevel
@@ -11,9 +10,8 @@ class MapState extends Phaser.State {
   private levels = []
   private timer
 
-  public init (levelData, nextState, params = {}): void {
+  public init (levelData: any, params = {}): void {
     this.levelData = levelData
-    this.nextState = nextState
     this.params = params
 
     this.nextLevel = this.params.nextLevel
@@ -64,7 +62,7 @@ class MapState extends Phaser.State {
       previousPoint = this.points[this.nextLevel - 2];
     }
 
-    nextPoint = this.points[this.nextLevel]
+    nextPoint = this.points[this.nextLevel - 1]
 
     this.player.position.set(previousPoint.x, previousPoint.y + 18);
     this.game.add.tween(this.player)

@@ -46,7 +46,7 @@ export default class LoadSpritesState extends Phaser.State {
 
   public create () {
 
-    this.game.state.start(this.nextState, true, false, this.levelData, this.nextState, this.params)
+    this.game.state.start(this.nextState, true, false, this.levelData, this.params)
 
   }
 
