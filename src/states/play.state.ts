@@ -1,8 +1,8 @@
 import 'phaser-ce'
+import { TilemapFactory } from '../libs/tilemap.factory'
 
 export default class PlayState extends Phaser.State {
 
-  private levelData
   private params
   private actualLevel
   private map
@@ -12,9 +12,9 @@ export default class PlayState extends Phaser.State {
   private sonarMusic
   private explosionSound
   private coinSound
+  private tilemapFactory
 
-  public init (levelData: object, params: any) {
-    this.levelData = levelData
+  public init (params) {
     this.params = params
     this.actualLevel = this.params.actualLevel
 
@@ -39,7 +39,6 @@ export default class PlayState extends Phaser.State {
 
   private setSound () {
     this.ambientMusic = this.game.add.audio('banks_music', 1, true);
-    // this.bossMusic = this.game.add.audio('boss_music', 1, true);
     this.sonarMusic = this.game.add.audio('sonar_music', 0.7, true);
 
     this.ambientMusic.play();
@@ -51,26 +50,11 @@ export default class PlayState extends Phaser.State {
 
 
   private setTilemap () {
-
-    // create map and set tileset
-    this.map = this.game.add.tilemap(this.levelData.map.key);
-    let tilesetIndex = 0;
-    this.map.tilesets.forEach(function (tileset) {
-      this.map.addTilesetImage(tileset.name, this.levelData.map.tilesets[tilesetIndex]);
-      tilesetIndex += 1;
-    }, this);
-
-    this.layers = {};
-    this.map.layers.forEach(function (layer) {
-      this.layers[layer.name] = this.map.createLayer(layer.name);
-      this.layers[layer.name].mask = this.mask;
-      if (layer.properties.collision) { // collision layer
-        this.map.setCollisionByExclusion([-1], true, layer.name);
-      }
-    }, this);
-
-    this.layers[this.map.layer.name].resizeWorld();
-
+    let data = this.params.data
+    let map = data.maps["level01"]
+    console.log(map)
+    this.tilemapFactory = new TilemapFactory(this.game)
+    this.tilemapFactory.build(map.key, map.tilesets)
   }
 
 }

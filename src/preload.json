@@ -1,5 +1,29 @@
 {
   "assets": {
+    "background_title": {
+      "type": "image",
+      "source": "assets/images/capa.png"
+    },
+    "background_map": {
+      "type": "image",
+      "source": "assets/images/underwater_temple.jpg"
+    },
+    "background_credits": {
+      "type": "image",
+      "source": "assets/images/creditos.png"
+    },
+    "start_button": {
+      "type": "image",
+      "source": "assets/images/start_games.png"
+    },
+    "sair_button": {
+      "type": "image",
+      "source": "assets/images/sair.png"
+    },
+    "credits_button": {
+      "type": "image",
+      "source": "assets/images/credits.png"
+    },
     "submarine": {
       "type": "atlasJSONHash",
       "source": "assets/images/submarino.png",
@@ -47,14 +71,6 @@
       "source": "assets/images/explosion.png",
       "texture": "assets/textures/explosion.json"
     },
-    "level_tilemap": {
-      "type": "tilemap",
-      "source": "assets/maps/level-01.json"
-    },
-    "map_tiles": {
-      "type": "image",
-      "source": "assets/images/submarine-tiles.png"
-    },
     "bullet": {
       "type": "image",
       "source": "assets/images/bullet.png"
@@ -78,12 +94,36 @@
     "coin_sound": {
       "type": "audio",
       "source": "assets/sounds/coin.wav"
+    },
+    "tilemap_level_01": {
+      "type": "tilemap",
+      "source": "assets/maps/level-01.json"
+    },
+    "tileset_submarine": {
+      "type": "image",
+      "source": "assets/images/submarine-tiles.png"
+    },
+    "tilemap_sandbox": {
+      "type": "tilemap",
+      "source": "assets/maps/sandbox/sandbox.json"
+    },
+    "tileset_sandbox": {
+      "type": "image",
+      "source": "assets/maps/sandbox/tileset-sandbox.jpg"
     }
   },
-  "map": {
-    "key": "level_tilemap",
-    "tilesets": [
-      "map_tiles"
-    ]
+  "maps": {
+    "level01": {
+      "key": "tilemap_level_01",
+      "tilesets": [
+        "tileset_submarine"
+      ]
+    },
+    "sandbox": {
+      "key": "tilemap_sandbox",
+      "tilesets": [
+        "tileset_sandbox"
+      ]
+    }
   }
 }

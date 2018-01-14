@@ -1,7 +1,6 @@
 export default {
   level: {
-    firstState: 'sandbox',
-    levelFile: 'sandbox.json',
+    firstState: 'title',
     nextLevel: 1
   },
   sound: {

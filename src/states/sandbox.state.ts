@@ -1,18 +1,17 @@
 import 'phaser-ce'
-import { TilemapFactory } from '../../libs/tilemap.factory'
+import { TilemapFactory } from '../libs/tilemap.factory'
 
 export default class SandboxState extends Phaser.State {
 
-  private levelData
+  private data
   private params
   private tilemapFactory
 
-
-  public init (levelData: object, params: any) {
-    this.levelData = levelData
+  public init (data, params) {
+    this.data = data
     this.params = params
 
-    this.game.stage.backgroundColor = 0x000000;
+    this.game.stage.backgroundColor = 0xFFFFFF;
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.game.physics.arcade.gravity.y = 400;
   }
@@ -22,7 +21,7 @@ export default class SandboxState extends Phaser.State {
   }
 
   private setTilemap () {
-    let map = this.levelData.map
+    let map = this.data.maps.sandbox
     this.tilemapFactory = new TilemapFactory(this.game)
     this.tilemapFactory.build(map.key, map.tilesets)
   }

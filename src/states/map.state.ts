@@ -2,7 +2,6 @@ import 'phaser-ce'
 
 class MapState extends Phaser.State {
 
-  private levelData
   private params
   private player
   private nextLevel
@@ -10,15 +9,13 @@ class MapState extends Phaser.State {
   private levels = []
   private timer
 
-  public init (levelData: any, params = {}): void {
-    this.levelData = levelData
+  public init (params): void {
     this.params = params
-
     this.nextLevel = this.params.nextLevel
   }
 
   public create (): void {
-    this.game.add.sprite(0, 0, 'background');
+    this.game.add.sprite(0, 0, 'background_map');
     this.setTimer()
     this.setPoints()
     this.setSubmarine()
@@ -73,13 +70,9 @@ class MapState extends Phaser.State {
 
   private startState () {
     const isLastLevel = this.levels.length === this.nextLevel;
-
-    const params = {
-      isLastLevel: isLastLevel,
-      actualLevel: this.nextLevel
-    };
-
-    this.game.state.start('loadfile', true, false, 'play', 'level1.json', params);
+    this.params.isLastLevel = isLastLevel
+    this.params.actualLevel = this.nextLevel
+    this.game.state.start('play', true, false, this.params);
   }
 
 }

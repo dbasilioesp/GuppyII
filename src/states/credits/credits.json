@@ -1,9 +1,0 @@
-{
-    "assets": {
-        "background": {"type": "image", "source": "assets/images/creditos.png"},
-        "sair_button": {"type": "image", "source": "assets/images/sair.png"}
-    }
-}
-
-    
-    

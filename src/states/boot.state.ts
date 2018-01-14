@@ -1,5 +1,5 @@
 import 'phaser-ce'
-import config from '../../config'
+import config from '../config'
 
 class BootState extends Phaser.State {
 
@@ -10,11 +10,22 @@ class BootState extends Phaser.State {
     this.scale.pageAlignVertically = true;
   }
 
+  public preload () {
+    this.load.text('preload', `levels/preload.json`)
+  }
+
   public create (): void {
-    const nextState = config.level.firstState
-    const levelFile = config.level.levelFile
-    const params = { nextLevel: config.level.nextLevel }
-    this.game.state.start("loadfile", true, false, nextState, levelFile, params);
+    const preload = this.game.cache.getText('preload')
+    const data = JSON.parse(preload)
+
+    const firstState = config.level.firstState
+    const params = {
+      data: data,
+      nextLevel: config.level.nextLevel
+    }
+
+    this.game.state.start("loading", true, false, firstState, params);
+
     this.configSound()
   }
 
