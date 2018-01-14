@@ -1,4 +1,4 @@
-import 'phaser'
+import 'phaser-ce'
 import config from '../../config'
 
 class BootState extends Phaser.State {
@@ -11,9 +11,9 @@ class BootState extends Phaser.State {
   }
 
   public create (): void {
-    const nextState = 'play'
-    const levelFile = 'level1.json'
-    const params = { nextLevel: 1 }
+    const nextState = config.level.firstState
+    const levelFile = config.level.levelFile
+    const params = { nextLevel: config.level.nextLevel }
     this.game.state.start("loadfile", true, false, nextState, levelFile, params);
     this.configSound()
   }

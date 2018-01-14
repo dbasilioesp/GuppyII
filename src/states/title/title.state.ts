@@ -3,6 +3,14 @@ import 'phaser'
 
 class TitleState extends Phaser.State {
 
+  private levelData
+  private params
+
+  public init (levelData: object, params: any) {
+    this.levelData = levelData
+    this.params = params
+  }
+
   public create (): void {
     const gameWidth = this.game.world.width
     const gameHeight = this.game.world.height
@@ -13,11 +21,11 @@ class TitleState extends Phaser.State {
   }
 
   private changeToMapState (): void {
-    this.game.state.start("map", true, false);
+    this.game.state.start("loadfile", true, false, 'map', 'map.json', this.params);
   }
 
   private changeToCreditsState (): void {
-    this.game.state.start('credits', true, false);
+    this.game.state.start('loadfile', true, false, 'credits', 'credits.json', this.params);
   }
 
 }

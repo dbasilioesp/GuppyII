@@ -1,0 +1,18 @@
+{
+  "assets": {
+    "level_tilemap": {
+      "type": "tilemap",
+      "source": "assets/maps/sandbox/sandbox.json"
+    },
+    "ts1": {
+      "type": "image",
+      "source": "assets/maps/sandbox/tileset-sandbox.jpg"
+    }
+  },
+  "map": {
+    "key": "level_tilemap",
+    "tilesets": [
+      "ts1"
+    ]
+  }
+}

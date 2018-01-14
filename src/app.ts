@@ -8,6 +8,7 @@ import LoadSpritesState from './states/boot/loadsprites.state'
 import TitleState from './states/title/title.state'
 import MapState from './states/map/map.state'
 import PlayState from './states/play/play.state'
+import SandboxState from './states/sandbox/sandbox.state'
 
 class App extends Phaser.Game {
 
@@ -19,6 +20,7 @@ class App extends Phaser.Game {
     this.state.add('title', TitleState)
     this.state.add('map', MapState)
     this.state.add('play', PlayState)
+    this.state.add('sandbox', SandboxState)
     this.state.start('boot')
   }
 
