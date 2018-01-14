@@ -1,5 +1,5 @@
 import 'phaser-ce'
-import { TilemapFactory } from '../../prefabs/tilemap.factory'
+import { TilemapFactory } from '../../libs/tilemap.factory'
 
 export default class SandboxState extends Phaser.State {
 
