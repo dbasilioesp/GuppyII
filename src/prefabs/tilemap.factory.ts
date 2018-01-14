@@ -10,14 +10,14 @@ export class TilemapFactory {
     this.game = game
   }
 
-  public build (data) {
+  public build (mapKey, tilesets) {
 
     let tilesetIndex = 0;
-    console.log(data)
-    this.map = this.game.add.tilemap(data.map.key);
+
+    this.map = this.game.add.tilemap(mapKey);
 
     this.map.tilesets.forEach(function (tileset) {
-      this.map.addTilesetImage(tileset.name, data.map.tilesets[tilesetIndex]);
+      this.map.addTilesetImage(tileset.name, tilesets[tilesetIndex]);
       tilesetIndex += 1;
     }, this);
 

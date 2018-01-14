@@ -22,8 +22,9 @@ export default class SandboxState extends Phaser.State {
   }
 
   private setTilemap () {
+    let map = this.levelData.map
     this.tilemapFactory = new TilemapFactory(this.game)
-    this.tilemapFactory.build(this.levelData)
+    this.tilemapFactory.build(map.key, map.tilesets)
   }
 
 }
