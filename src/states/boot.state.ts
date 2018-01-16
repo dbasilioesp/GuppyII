@@ -10,22 +10,10 @@ class BootState extends Phaser.State {
     this.scale.pageAlignVertically = true;
   }
 
-  public preload () {
-    this.load.text('preload', `levels/preload.json`)
-  }
-
   public create (): void {
-    const preload = this.game.cache.getText('preload')
-    const data = JSON.parse(preload)
-
     const firstState = config.level.firstState
-    const params = {
-      data: data,
-      nextLevel: config.level.nextLevel
-    }
-
+    const params = { nextLevel: config.level.nextLevel }
     this.game.state.start("loading", true, false, firstState, params);
-
     this.configSound()
   }
 

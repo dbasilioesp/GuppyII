@@ -2,7 +2,7 @@ import 'phaser-ce'
 
 export class TilemapFactory {
 
-  private game
+  private game: Phaser.Game
   public map
   public layers = {}
 

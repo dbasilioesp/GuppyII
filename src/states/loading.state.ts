@@ -1,4 +1,9 @@
 import 'phaser-ce'
+import backgrounds from '../schemes/backgrounds'
+import buttons from '../schemes/buttons'
+import characters from '../schemes/characters'
+import sounds from '../schemes/sounds'
+import { tiles } from '../schemes/tiles'
 
 export default class LoadingState extends Phaser.State {
 
@@ -15,7 +20,11 @@ export default class LoadingState extends Phaser.State {
   }
 
   public create () {
-    this.loadAssets(this.data.assets)
+    this.loadAssets(backgrounds)
+    this.loadAssets(buttons)
+    this.loadAssets(characters)
+    this.loadAssets(sounds)
+    this.loadAssets(tiles)
     this.setProgress()
   }
 

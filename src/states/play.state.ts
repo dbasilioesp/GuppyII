@@ -1,4 +1,5 @@
 import 'phaser-ce'
+import { maps } from '../schemes/tiles'
 import { TilemapFactory } from '../libs/tilemap.factory'
 
 export default class PlayState extends Phaser.State {
@@ -51,8 +52,7 @@ export default class PlayState extends Phaser.State {
 
   private setTilemap () {
     let data = this.params.data
-    let map = data.maps["level01"]
-    console.log(map)
+    let map = maps["level01"]
     this.tilemapFactory = new TilemapFactory(this.game)
     this.tilemapFactory.build(map.key, map.tilesets)
   }
