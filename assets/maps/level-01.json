@@ -32,7 +32,6 @@
         }, 
         {
          "draworder":"topdown",
-         "height":0,
          "name":"player",
          "objects":[
                 {
@@ -44,19 +43,17 @@
                  "type":"",
                  "visible":true,
                  "width":25.3333,
-                 "x":276,
-                 "y":672
+                 "x":74,
+                 "y":75
                 }],
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
-         "width":0,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
-         "height":0,
          "name":"satelites",
          "objects":[
                 {
@@ -182,13 +179,11 @@
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
-         "width":0,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
-         "height":0,
          "name":"minas",
          "objects":[
                 {
@@ -381,13 +376,11 @@
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
-         "width":0,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
-         "height":50,
          "name":"lives",
          "objects":[
                 {
@@ -429,13 +422,11 @@
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
-         "width":60,
          "x":0,
          "y":0
         }, 
         {
          "draworder":"topdown",
-         "height":0,
          "name":"final",
          "objects":[
                 {
@@ -453,7 +444,6 @@
          "opacity":1,
          "type":"objectgroup",
          "visible":true,
-         "width":0,
          "x":0,
          "y":0
         }],
@@ -488,20 +478,27 @@
             {
              "11":
                 {
-                 "image":"..\/images\/final_point.png"
+                 "image":"..\/images\/final_point.png",
+                 "imageheight":64,
+                 "imagewidth":32
                 },
              "2":
                 {
-                 "image":"..\/images\/reactor-mini.png"
+                 "image":"..\/images\/reactor-mini.png",
+                 "imageheight":16,
+                 "imagewidth":16
                 },
              "3":
                 {
-                 "image":"..\/images\/reactor.png"
+                 "image":"..\/images\/reactor.png",
+                 "imageheight":32,
+                 "imagewidth":32
                 }
             },
          "tilewidth":32
         }],
  "tilewidth":16,
- "version":1,
+ "type":"map",
+ "version":"1.0.0",
  "width":60
 }

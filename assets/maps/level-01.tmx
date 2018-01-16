@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="60" height="50" tilewidth="16" tileheight="16" nextobjectid="58">
+<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="60" height="50" tilewidth="16" tileheight="16" nextobjectid="58">
  <tileset firstgid="1" name="submarine-tiles" tilewidth="16" tileheight="16" tilecount="36" columns="6">
   <image source="../images/submarine-tiles.png" trans="ff00ff" width="100" height="100"/>
  </tileset>
@@ -126,7 +126,7 @@
 </data>
  </layer>
  <objectgroup name="player">
-  <object id="1" x="276" y="672" width="25.3333" height="26.6667">
+  <object id="1" x="74" y="75" width="25.3333" height="26.6667">
    <ellipse/>
   </object>
  </objectgroup>

@@ -31,5 +31,7 @@
     "webpack-dev-server": "2.9.3",
     "xml2js": "0.4.19"
   },
-  "dependencies": {}
+  "dependencies": {
+    "lodash": "^4.17.4"
+  }
 }

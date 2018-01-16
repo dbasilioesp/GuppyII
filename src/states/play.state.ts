@@ -1,6 +1,8 @@
 import 'phaser-ce'
 import { maps } from '../schemes/tiles'
 import { TilemapFactory } from '../libs/tilemap.factory'
+import { Satelite } from '../prefabs/satelite.prefab'
+import { Player } from '../prefabs/player.prefab'
 
 export default class PlayState extends Phaser.State {
 
@@ -15,6 +17,9 @@ export default class PlayState extends Phaser.State {
   private coinSound
   private tilemapFactory
 
+  private satelites: Phaser.Group
+  private players: Phaser.Group
+
   public init (params) {
     this.params = params
     this.actualLevel = this.params.actualLevel
@@ -22,12 +27,29 @@ export default class PlayState extends Phaser.State {
     this.game.stage.backgroundColor = 0x000000;
     this.game.physics.startSystem(Phaser.Physics.ARCADE);
     this.game.physics.arcade.gravity.y = 400;
+
+    let level = maps['level_' + this.actualLevel]
+    this.tilemapFactory = new TilemapFactory(this.game)
+    this.tilemapFactory.build(level.key, level.tilesets)
   }
 
   public create () {
+    this.setGroups()
     this.setMask()
-    this.setTilemap()
     this.setSound()
+
+    this.tilemapFactory.addPrefab('satelites', this.createSatelites, this)
+    this.tilemapFactory.addPrefab('player', this.createPlayer, this)
+    this.tilemapFactory.addCollider(this.players, null, this)
+  }
+
+  public update () {
+    this.tilemapFactory.mapCollisions()
+  }
+
+  private setGroups () {
+    this.satelites = this.game.add.group();
+    this.players = this.game.add.group();
   }
 
   private setMask () {
@@ -49,12 +71,18 @@ export default class PlayState extends Phaser.State {
     this.coinSound = this.game.add.audio('coin_sound', 0.7);
   }
 
+  private createSatelites (object) {
+    let position = this.tilemapFactory.objectPosition(object);
+    let satelite = new Satelite(this.game, position)
+    satelite.mask = this.mask
+    this.satelites.add(satelite)
+  }
 
-  private setTilemap () {
-    let data = this.params.data
-    let map = maps["level01"]
-    this.tilemapFactory = new TilemapFactory(this.game)
-    this.tilemapFactory.build(map.key, map.tilesets)
+  private createPlayer (object) {
+    let position = this.tilemapFactory.objectPosition(object);
+    let player = new Player(this.game, position)
+    player.mask = this.mask
+    this.players.add(player)
   }
 
 }

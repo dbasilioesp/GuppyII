@@ -18,7 +18,7 @@ export const tiles = {
 }
 
 export const maps = {
-  level01: {
+  level_1: {
     key: 'tilemap_level_01',
     tilesets: [
       'tileset_submarine'

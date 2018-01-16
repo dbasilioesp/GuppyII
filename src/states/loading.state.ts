@@ -7,7 +7,6 @@ import { tiles } from '../schemes/tiles'
 
 export default class LoadingState extends Phaser.State {
 
-  private data
   private nextState
   private params
   private progressText
@@ -15,7 +14,6 @@ export default class LoadingState extends Phaser.State {
   public init (nextState, params) {
     this.nextState = nextState
     this.params = params
-    this.data = this.params.data
     this.game.stage.backgroundColor = 0xffffff
   }
 

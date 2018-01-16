@@ -1,10 +1,13 @@
 import 'phaser-ce'
+import * as _ from 'lodash'
 
 export class TilemapFactory {
 
   private game: Phaser.Game
   public map
   public layers = {}
+  private colliders = []
+  private prefabs = []
 
   constructor(game) {
     this.game = game
@@ -29,42 +32,51 @@ export class TilemapFactory {
     }, this);
 
     this.layers[this.map.layer.name].resizeWorld();
+  }
 
-    this.setPrefabs(this.map.objects)
+  public addCollider (object, callback, state) {
+    this.colliders.push({ object: object, callback: callback, state: state })
+  }
+
+  public mapCollisions () {
+
+    this.map.layers.forEach(function (layer) {
+      if (layer.properties.collision) {
+
+        _.forEach(this.colliders, (collider) => {
+          if (collider.callback) {
+            this.game.physics.arcade.collide(collider.object, this.layers[layer.name], collider.callback, null, collider.state);
+          } else {
+            this.game.physics.arcade.collide(collider.object, this.layers[layer.name]);
+          }
+        })
+
+      }
+    }, this);
 
   }
 
-  private setPrefabs (objects) {
+  public addPrefab (prefabKey, callback, state) {
+    let objects = this.map.objects
+    let objectsArray = _.get(objects, prefabKey)
 
-    for (let objectKey in objects) {
-      if (this.map.objects.hasOwnProperty(objectKey)) {
-        // create layer objects
-        if (objectKey === 'satelites') {
-          // this.map.objects[objectLayer].forEach(this.createSatelites, this);
-        }
+    if (objectsArray) {
+      objectsArray.forEach(callback, state);
+    }
+  }
 
-        if (objectKey === 'player') {
-          // this.createPlayer(this.map.objects[objectLayer][0]);
-        }
+  public objectPosition (object) {
+    let objectY
+    let position
 
-        if (objectKey === 'minas') {
-          // this.map.objects[objectLayer].forEach(this.createMines, this);
-        }
-
-        if (objectKey === 'boss') {
-          // this.createBoss(this.map.objects[objectLayer][0]);
-        }
-
-        if (objectKey === 'final') {
-          // this.createFinal(this.map.objects[objectLayer][0]);
-        }
-
-        if (objectKey === 'lives') {
-          // this.map.objects[objectLayer].forEach(this.createLive, this);
-        }
-      }
+    // tiled coordinates starts in the bottom left corner
+    objectY = (object.gid) ? object.y - (this.map.tileHeight / 2) : object.y + (object.height / 2);
+    position = {
+      x: object.x + (this.map.tileHeight / 2),
+      y: objectY
     }
 
+    return position
   }
 
 }
