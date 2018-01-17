@@ -24,3 +24,25 @@ Assets - Bunch: http://opengameart.org/users/buch
 
 Images 
 	- http://unidcolor.deviantart.com/art/Underwater-Temple-202580919
+
+## How to program
+
+### Starting
+
+O projeto inicia pelo arquivo _src/app.ts_ onde inicialmente é setados todos states do jogo e inicializado pelo _BootState_. Nesse ponto também é configurado o tamanho do jogo (ex: 800x600).
+
+### Booting
+
+A fase de boot é onde é configurado a escala e alinhamento do jogo na tela. Também é configurado efeitos como o som. Seguindo para a fase de loading.
+
+### Loading
+
+Nessa fase é carregado todos assets do jogo mostrando um tela de porcentagem do que falta carregar. Seguindo para a fase setada no arquivo _src/config.ts_.
+
+### Libs
+
+Esse pasta possui códigos que ajudam a construir o jogo sem necessariamente estarem vinculados ao phaser.
+
+### Schemes
+
+Aqui fica o mapeamento dos assets que serão carregados pela fase de loading.
