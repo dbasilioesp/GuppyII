@@ -54,9 +54,12 @@ export default class LoadingState extends Phaser.State {
 
   private setProgress () {
     this.progressText = this.game.add.text(this.game.world.centerX - 30, this.game.world.centerY, '0%', { fill: '#000000' })
-    this.game.load.onFileComplete.add(this.loadProgress, this)
-    this.game.load.onLoadComplete.add(this.loadComplete, this)
-    this.game.load.start()
+
+    this.game.time.events.add(Phaser.Timer.SECOND * 1, () => {
+      this.game.load.onFileComplete.add(this.loadProgress, this)
+      this.game.load.onLoadComplete.add(this.loadComplete, this)
+      this.game.load.start()
+    }, this);
   }
 
   private loadProgress (progress, cacheKey, success, totalLoaded, totalFiles) {
@@ -64,7 +67,9 @@ export default class LoadingState extends Phaser.State {
   }
 
   private loadComplete () {
-    this.game.state.start(this.nextState, true, false, this.params)
+    this.game.time.events.add(Phaser.Timer.SECOND * 1, () => {
+      this.game.state.start(this.nextState, true, false, this.params)
+    }, this)
   }
 
 }
