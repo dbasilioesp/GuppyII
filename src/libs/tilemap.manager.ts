@@ -1,7 +1,7 @@
 import 'phaser-ce'
 import * as _ from 'lodash'
 
-export class TilemapFactory {
+export class TilemapManager {
 
   private game: Phaser.Game
   public map

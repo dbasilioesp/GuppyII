@@ -1,12 +1,12 @@
 import 'phaser-ce'
 import { maps } from '../schemes/tiles'
-import { TilemapFactory } from '../libs/tilemap.factory'
+import { TilemapManager } from '../libs/tilemap.manager'
 
 export default class SandboxState extends Phaser.State {
 
   private data
   private params
-  private tilemapFactory
+  private tilemapManager
 
   public init (data, params) {
     this.data = data
@@ -23,8 +23,8 @@ export default class SandboxState extends Phaser.State {
 
   private setTilemap () {
     let map = maps.sandbox
-    this.tilemapFactory = new TilemapFactory(this.game)
-    this.tilemapFactory.build(map.key, map.tilesets)
+    this.tilemapManager = new TilemapManager(this.game)
+    this.tilemapManager.build(map.key, map.tilesets)
   }
 
 }

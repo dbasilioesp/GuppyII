@@ -1,24 +1,23 @@
 import 'phaser-ce'
 import { maps } from '../schemes/tiles'
-import { TilemapFactory } from '../libs/tilemap.factory'
-import { Satelite } from '../prefabs/satelite.prefab'
-import { Player } from '../prefabs/player.prefab'
+import { TilemapManager } from '../libs/tilemap.manager'
+import { Satelite } from '../prefabs/satelite.sprite'
+import { Player } from '../prefabs/player.sprite'
+import { PlayersGroup } from '../prefabs/players.group'
 
 export default class PlayState extends Phaser.State {
 
   private params
   private actualLevel
-  private map
   private mask
-  private layers
   private ambientMusic
   private sonarMusic
   private explosionSound
   private coinSound
-  private tilemapFactory
 
+  private tilemapManager: TilemapManager
   private satelites: Phaser.Group
-  private players: Phaser.Group
+  private players: PlayersGroup
 
   public init (params) {
     this.params = params
@@ -29,8 +28,8 @@ export default class PlayState extends Phaser.State {
     this.game.physics.arcade.gravity.y = 400;
 
     let level = maps['level_' + this.actualLevel]
-    this.tilemapFactory = new TilemapFactory(this.game)
-    this.tilemapFactory.build(level.key, level.tilesets)
+    this.tilemapManager = new TilemapManager(this.game)
+    this.tilemapManager.build(level.key, level.tilesets)
   }
 
   public create () {
@@ -38,18 +37,19 @@ export default class PlayState extends Phaser.State {
     this.setMask()
     this.setSound()
 
-    this.tilemapFactory.addPrefab('satelites', this.createSatelites, this)
-    this.tilemapFactory.addPrefab('player', this.createPlayer, this)
-    this.tilemapFactory.addCollider(this.players, null, this)
+    this.tilemapManager.addPrefab('player', this.createPlayer, this)
+    this.tilemapManager.addPrefab('satelites', this.createSatelites, this)
+    this.tilemapManager.addCollider(this.players, null, this)
   }
 
   public update () {
-    this.tilemapFactory.mapCollisions()
+    this.tilemapManager.mapCollisions()
+    this.players.overlapSatelites(this.satelites)
   }
 
   private setGroups () {
     this.satelites = this.game.add.group();
-    this.players = this.game.add.group();
+    this.players = new PlayersGroup(this.game);
   }
 
   private setMask () {
@@ -72,14 +72,14 @@ export default class PlayState extends Phaser.State {
   }
 
   private createSatelites (object) {
-    let position = this.tilemapFactory.objectPosition(object);
+    let position = this.tilemapManager.objectPosition(object);
     let satelite = new Satelite(this.game, position)
     satelite.mask = this.mask
     this.satelites.add(satelite)
   }
 
   private createPlayer (object) {
-    let position = this.tilemapFactory.objectPosition(object);
+    let position = this.tilemapManager.objectPosition(object);
     let player = new Player(this.game, position)
     player.mask = this.mask
     this.players.add(player)
