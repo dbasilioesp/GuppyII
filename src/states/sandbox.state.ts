@@ -22,6 +22,9 @@ export default class SandboxState extends Phaser.State {
   public create () {
     // this.setTilemap()
 
+    let ambientMusic = this.game.add.audio('banks_music', 1, true);
+    ambientMusic.play();
+
     this.pause = new Pause(this.game)
 
   }
