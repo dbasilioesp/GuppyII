@@ -1,6 +1,6 @@
 export default {
   level: {
-    firstState: 'title',
+    firstState: 'sandbox',
     nextLevel: 1
   },
   sound: {

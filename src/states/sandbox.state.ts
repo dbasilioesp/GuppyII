@@ -1,12 +1,14 @@
 import 'phaser-ce'
 import { maps } from '../schemes/tiles'
 import { TilemapManager } from '../libs/tilemap.manager'
+import { Pause } from '../prefabs/pause'
 
 export default class SandboxState extends Phaser.State {
 
   private data
   private params
   private tilemapManager
+  private pause: Pause
 
   public init (data, params) {
     this.data = data
@@ -18,7 +20,10 @@ export default class SandboxState extends Phaser.State {
   }
 
   public create () {
-    this.setTilemap()
+    // this.setTilemap()
+
+    this.pause = new Pause(this.game)
+
   }
 
   private setTilemap () {
